@@ -1,0 +1,11 @@
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp3.0\AuthService.csprojAssemblyReference.cache
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp3.0\AuthService.AssemblyInfoInputs.cache
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp3.0\AuthService.AssemblyInfo.cs
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp3.0\AuthService.deps.json
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp3.0\AuthService.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp3.0\AuthService.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp3.0\RepositoryCore.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp3.0\RepositoryCore.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp3.0\AuthService.csproj.CopyComplete
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp3.0\AuthService.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp3.0\AuthService.pdb

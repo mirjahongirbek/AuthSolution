@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "AuthService/1.0.0": {
+        "dependencies": {
+          "RepositoryCore": "2.0.0.3"
+        },
+        "runtime": {
+          "AuthService.dll": {}
+        }
+      },
+      "RepositoryCore/2.0.0.3": {
+        "runtime": {
+          "RepositoryCore.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AuthService/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RepositoryCore/2.0.0.3": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
