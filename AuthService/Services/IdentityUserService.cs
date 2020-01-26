@@ -200,7 +200,6 @@ namespace AuthService
         {
             var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             var now = DateTime.Now;
-            new JwtSecurityToken()
             var jwt = new JwtSecurityToken(
                  AuthOptions.ISSUER,
                  AuthOptions.AUDIENCE,

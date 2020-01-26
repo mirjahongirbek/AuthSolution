@@ -4,3 +4,7 @@ C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\Enti
 C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.csprojAssemblyReference.cache
 C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.AssemblyInfoInputs.cache
 C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.AssemblyInfo.cs
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\AuthService.deps.json
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\AuthService.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\RepositoryCore.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.csproj.CopyComplete
