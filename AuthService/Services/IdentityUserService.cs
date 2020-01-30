@@ -7,6 +7,7 @@ using EntityRepository.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RepositoryCore.CoreState;
+using RepositoryCore.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,7 +16,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+using LoginResult = AuthService.ModelView.LoginResult;
 
 namespace AuthService
 {
@@ -24,9 +25,9 @@ namespace AuthService
        where TUserRole : IdentityUserRole
        where TRole : IdentityRole
     {
+        #region Default Constructor
         DbSet<TUser> _dbSet;
         DbSet<TUserRole> _userRole;
-
         DbContext _context;
         public DbSet<TUser> DbSet { get; }
         IRoleRepository<TRole> _roleService;
@@ -36,8 +37,9 @@ namespace AuthService
             _userRole = context.DataContext.Set<TUserRole>();
             _context = context.DataContext;
             _roleService = roleService;
-
         }
+        #endregion
+
         public virtual async Task<bool> Delete(int id)
         {
             var user = Get(id);
@@ -106,10 +108,10 @@ namespace AuthService
             return claims;
         }
         //TODO
-        public virtual async Task Logout(string access)
+       /* public virtual async Task Logout(string access)
         {
-            throw new NotImplementedException();
-        }
+           GetFirst(m=>m.)
+        }*/
         public virtual async Task<bool> RegisterAsync(TUser model)
         {
             var user = await
@@ -147,24 +149,8 @@ namespace AuthService
             var roles = _roleService.GetList(IdRoles);
             return roles;
         }
-        public virtual async Task<(LoginResult, TUser)> Login(LoginViewModal model)
-        {
-            var user = _dbSet.Where(m => m.UserName == model.UserName && m.Password == RepositoryState.GetHashString(model.Password)).FirstOrDefault();
-            if (user == null)
-            {
-                return (null, null);
-            }
 
-            if (AuthOptions.CheckDeviceId)
-            {
-                if (user.DeviceList.Contains(model.DeviceId))
-                    return (Login(user), user);
-                return (null, user);
-            }
-            return (Login(user), user);
-
-        }
-        public virtual async Task<(LoginResult, TUser)> Login(string username, string password)
+      /*  public virtual async Task<(LoginResult, TUser)> Login(string username, string password)
         {
             var user = _dbSet.Where(m => m.UserName == username && m.Password == RepositoryState.GetHashString(password)).FirstOrDefault();
             if (user == null)
@@ -172,19 +158,20 @@ namespace AuthService
 
             }
             return (Login(user), user);
-        }
+        }*/
         public virtual LoginResult Login(TUser user)
         {
             if (user == null) { return null; }
             var roles = GetRoles(user);
             SetToken(Claims(user), user);
+            
             Update(user).Wait();
             LoginResult loginResult = new LoginResult()
             {
                 AccessToken = user.Token,
                 UserName = user.UserName,
                 RefreshToken = user.RefreshToken,
-                MyId = user.Id,
+                UserId = user.Id,
                 Roles = roles.Select(m => m.Name).ToList()
             };
             return loginResult;
@@ -195,6 +182,12 @@ namespace AuthService
             var random = new Random();
             for (var i = 0; i < 10; i++) refresh += random.Next(15);
             user.RefreshToken = RepositoryState.GetHashString(refresh);
+
+        }
+        public LoginResult LoginByRefresh(string refreshToken)
+        {
+           var user= GetFirst(m => m.RefreshToken == refreshToken);
+           return Login(user);
         }
         public string SetToken(List<Claim> claims, TUser user = null)
         {
@@ -212,9 +205,9 @@ namespace AuthService
             if (user != null)
             {
                 user.Token = token;
+                SetRefresh(user);
                 user.LastLoginDate = DateTime.Now;
             }
-
             return token;
         }
         public async Task<TUser> GetMe(int id)
@@ -252,7 +245,8 @@ namespace AuthService
         }
         public TUser GetFirst(Expression<Func<TUser, bool>> expression)
         {
-            return _dbSet.FirstOrDefault(expression);
+           return _dbSet.Where(expression).OrderByDescending(m => m.Id).FirstOrDefault();
+            //return _dbSet.FirstOrDefault(expression);
         }
         public IEnumerable<TUser> Find(Expression<Func<TUser, bool>> expression)
         {
@@ -324,7 +318,136 @@ namespace AuthService
             _userRole.Add(userRole);
             _context.SaveChanges();
         }
+        #region Register
+        public virtual async Task<(LoginResult, TUser)> Login(LoginViewModal model)
+        {
+            var user = _dbSet.Where(m => (m.UserName == model.UserName || m.Email == model.UserName) && m.Password == RepositoryState.GetHashString(model.Password)).FirstOrDefault();
+            if (user == null)
+            {
+                return (null, null);
+            }
 
+            if (AuthOptions.CheckDeviceId)
+            {
+                if (user.CheckDevice(model.DeviceId))
+                {
+                    user.ChangeLastIncome(model.DeviceId);
+                    return (Login(user), user);
+                }
+                //TODO
+                return (null, user);
+            }
+            return (Login(user), user);
+
+        }
+        public async Task<RegisterResult> RegisterAsync(RegisterUser model)
+        {
+            RegisterResult result = new RegisterResult();
+            var user = _dbSet.FirstOrDefault(m => m.UserName == model.UserName || m.Email == model.UserName);
+            if (user != null)
+            {
+                result.IsRegister = false;
+                result.ErrorMessage = "user exist";
+                return result;
+            }
+            user = AddRegister(model);
+            if (AuthOptions.SetNameAsPhone)
+            {
+                model.UserName = RepositoryState.ParsePhone(model.UserName);
+                if (string.IsNullOrEmpty(model.UserName))
+                {
+                    throw new CoreException("fg");
+                }
+                user.PhoneNumber= model.UserName;
+            }
+            _dbSet.Add(user);
+            result.IsRegister = true;
+            result.Name = user.UserName;
+            return result;
+
+        }
+        private TUser AddRegister(RegisterUser model)
+        {
+           var  user = (TUser)Activator.CreateInstance(typeof(TUser));
+            user.UserName = model.UserName;
+            user.UserStatus = UserStatus.NewRegistered;
+            user.Password = model.Password;
+            user.Email = model.Email;
+            return user;
+        }
+
+        public async Task<bool> RestorePasswor(RestorePasswordModel model)
+        {
+            if (!model.IsCompare()) return;
+           var user= GetFirst(m => m.UserName == model.UserName);
+            if(user== null)
+            {
+                throw new CoreException();
+            }
+            if (!string.IsNullOrEmpty(model.Token))
+            {
+
+            }
+            if(CheckUserOtp(user, model.Otp))
+            {
+                user.Password = RepositoryState.GetHashString(model.Password);
+            }
+            else
+            {
+                throw new CoreException();
+            }
+           await Update(user);
+        }
+
+        public async Task<bool> ChangePassword(TUser user, ChangePasswordModel model)
+        {
+            if (!model.IsCompare())
+            {
+                throw new CoreException();
+            }
+            if(user.Password!= RepositoryState.GetHashString(model.Password))
+            {
+                throw new CoreException();
+            }
+           user.Password = RepositoryState.GetHashString(model.Password);
+           await Update(user);
+            return true;
+         }
+        public bool CheckUserOtp(TUser user, string otp)
+        {
+            if (user.LastOtpDate.AddMinutes(AuthOptions.OtpTime) < DateTime.Now)
+            {
+                throw new CoreException();
+            }
+            if (user.LastOtp == otp)
+            {
+                user.LastOtp = "";
+                user.UserStatus = UserStatus.Active;
+            }
+            else
+            {
+                user.ErrorOtpCount++;
+                throw new CoreException();
+            }
+            
+         } 
+        public async Task<LoginResult> ActivateUser(ActivateUserModel model)
+        {
+            
+            var user= GetFirst(m =>m.UserName== RepositoryState.ParsePhone(model.UserName));
+           if(CheckUserOtp(user, model.Otp))
+            {
+                user.AddDeviceId(model.DeviceId, model.DeviceName);
+                await Update(user);
+                return Login(user);
+            }
+            else
+            {
+                
+            }
+           
+        }
+        #endregion
         #endregion
 
 

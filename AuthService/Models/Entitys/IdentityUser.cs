@@ -1,5 +1,6 @@
 ﻿
 using AuthService.Enum;
+using Newtonsoft.Json;
 using RepositoryCore.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -76,14 +77,34 @@ namespace AuthService.Models
         [IgnoreDataMember]
         [Column("password")]
         public virtual string Password { get; set; }
+        private List<DeviceInfo> userDevice;
         [IgnoreDataMember]
         [Column("devices")]
         public string Devices { get; set; }
         [NotMapped]
-        public List<string> DeviceList { get {
-                if (string.IsNullOrEmpty(Devices)) { Devices = ""; return new List<string>(); }
+        public List<DeviceInfo> DeviceList { get {
+                try
+                {
+                    if (string.IsNullOrEmpty(Devices))
+                    {
+                        userDevice= new List<DeviceInfo>();
+                        return userDevice;
+                    }
+                   userDevice= JsonConvert.DeserializeObject<List<DeviceInfo>>(Devices);
+                    return userDevice;
+                }
+                catch(Exception ext)
+                {
+                    Console.WriteLine("Idenity User Error:" + ext.Message);
+                    userDevice= new List<DeviceInfo>();
+                    return userDevice;
+                }
+                
+                
+
+              /*  if (string.IsNullOrEmpty(Devices)) { Devices = ""; return new List<DeviceInfo>(); }
                var devices=Devices.Split(",");
-                return devices.ToList();
+                return devices.ToList();*/
             } }
         /// <summary>
         /// A random value that must change whenever a users credentials change (password changed, login removed)
@@ -177,16 +198,51 @@ namespace AuthService.Models
     {
         public bool CheckDevice(string deviceId)
         {
-            if (string.IsNullOrEmpty(DeviceList.FirstOrDefault(m => m == deviceId))){
+            var selectDevice = DeviceList.FirstOrDefault(m => m.DeviceId == deviceId);
+            if (selectDevice== null){
                 return false;
             }
+            selectDevice.LastInCome = DateTime.Now;
+            Devices = JsonConvert.SerializeObject(DeviceList);
             return true;
         }
-        public void AddDeviceId(string deviceId)
+        public void AddDeviceId(string deviceId, string deviceName)
         {
-            Devices += "," + deviceId;
+            if (CheckDevice(deviceId))
+            {
+                return;
+            }
+            DeviceInfo deviceInfo = new DeviceInfo
+            {
+                AddDate = DateTime.Now,
+                DeviceId = deviceId,
+                 DeviceName= deviceName,
+                  LastInCome= DateTime.Now
+            };
+            userDevice.Add(deviceInfo);
+            Devices = JsonConvert.SerializeObject(userDevice);
+
+        }
+        public void ChangeLastIncome(string deviceId)
+        {
+            if (!CheckDevice(deviceId))
+            {
+                return;
+            }
+           var myDevice= userDevice.FirstOrDefault(m => m.DeviceId == deviceId);
+            myDevice.LastInCome = DateTime.Now;
+            Devices = JsonConvert.SerializeObject(userDevice);
+
         }
         
     }    
+    public class DeviceInfo
+    {
+        public string DeviceId { get; set; }
+        public string DeviceName { get; set; }
+        public DateTime AddDate { get; set; } 
+        public DateTime LastInCome { get; set; }
+        public string Data { get; set; }
+    }
 
 }

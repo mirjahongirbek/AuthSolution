@@ -14,6 +14,7 @@ namespace AuthService.Attributes
             : base(typeof(AuthorizeActionFilter))
         {
             Arguments = new object[] { Roles, MethodName, UserName, Position };
+
         }
     }
     public class TokenAttribute : Attribute

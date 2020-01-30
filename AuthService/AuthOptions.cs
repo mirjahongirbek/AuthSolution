@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,5 +17,8 @@ namespace AuthService
         }
         public static bool CheckDeviceId { get; set; } = true;
         public static TimeSpan Otp { get; set; } = TimeSpan.FromSeconds(180);
+        public static bool IsSendOtp { get; set; } = true;
+        public static bool SetNameAsPhone { get; set; } = true;
+        public static int OtpTime { get; set; } = 3;
     }
 }

@@ -1,6 +1,4 @@
 ﻿using RepositoryCore.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,7 +22,7 @@ namespace AuthService.Models
         [Column("role_id")]
         public virtual int RoleId { get; set; }
     }
-    public class LoginResult
+   /* public class LoginResult
     {
         public LoginResult()
         {
@@ -38,7 +36,7 @@ namespace AuthService.Models
         public int MaxPosition { get; set; }
         public List<string> Actions { get; set; }
         public int MyId { get; set; }
-    }
+    }*/
 
 
 }

@@ -32,6 +32,9 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
+              "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj"
+              },
               "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj": {
                 "projectPath": "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj"
               },
@@ -67,6 +70,168 @@
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[5.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj": {
+      "version": "0.0.2",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj",
+        "projectName": "CoreClient",
+        "projectPath": "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj",
+        "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\murtozayev-j\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "\\\\172.17.9.248\\open\\nuget": {},
+          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj"
+              },
+              "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "LiteDB": {
+              "target": "Package",
+              "version": "[4.1.4, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[106.6.10, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj": {
+      "version": "0.0.2",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj",
+        "projectName": "CoreResult",
+        "projectPath": "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj",
+        "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\murtozayev-j\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "\\\\172.17.9.248\\open\\nuget": {},
+          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj"
+              },
+              "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "AspNetCore.Mvc.Routes.DebuggingLoggerMiddleware": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Microsoft.AspNetCore.Http": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
             }
           },
           "imports": [
@@ -129,6 +294,74 @@
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[2.2.6, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj": {
+      "version": "0.0.2",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj",
+        "projectName": "LiteRepository",
+        "projectPath": "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj",
+        "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\murtozayev-j\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "\\\\172.17.9.248\\open\\nuget": {},
+          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "LiteDB": {
+              "target": "Package",
+              "version": "[4.1.4, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
