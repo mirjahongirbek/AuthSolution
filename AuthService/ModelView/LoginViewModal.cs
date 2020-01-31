@@ -28,6 +28,7 @@ namespace AuthService.ModelView
         public bool IsRegister { get; set; }
         public string Name { get; set; }
         public string ErrorMessage { get; set; } 
+        public int ErrorId { get; set; }
     }
     public class RestorePasswordModel
     {

@@ -183,6 +183,8 @@ namespace AuthService.Models
         /// </summary>
         [Column("position")]
         public virtual int Position { get; set; }
+        [Column("is_send_otp")]
+        public virtual bool IsSendOtp { get; set; }
 
 
         /// <summary>

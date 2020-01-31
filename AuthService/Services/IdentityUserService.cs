@@ -18,9 +18,10 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using LoginResult = AuthService.ModelView.LoginResult;
 
-namespace AuthService
+namespace AuthService.Services
 {
-    public class IdentityUserService<TUser, TRole, TUserRole> : IAuthRepository<TUser, TUserRole>
+      
+    public partial class IdentityUserService<TUser, TRole, TUserRole> : IAuthRepository<TUser, TUserRole>
        where TUser : IdentityUser
        where TUserRole : IdentityUserRole
        where TRole : IdentityRole
@@ -39,7 +40,7 @@ namespace AuthService
             _roleService = roleService;
         }
         #endregion
-
+        #region CRUD Metdhos
         public virtual async Task<bool> Delete(int id)
         {
             var user = Get(id);
@@ -61,67 +62,6 @@ namespace AuthService
         public virtual async Task<TUser> GetByUserName(string userName)
         {
             return _dbSet.FirstOrDefault(m => m.UserName == userName);
-        }
-        public virtual async Task<ClaimsIdentity> LoginClaims(string username, string password)
-        {
-            var user = await _dbSet.FirstOrDefaultAsync(m => m.UserName == username
-            && m.Password == RepositoryState.GetHashString(password));
-            if (user == null) { return null; }
-            _userRole.Where(m => m.UserId == user.Id);
-            var clams = Claims(user);
-            if (clams == null)
-            {
-                return null;
-            }
-            var claimsIdentity = new ClaimsIdentity(clams, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            return claimsIdentity;
-        }
-        public virtual List<Claim> Claims(TUser user)
-        {
-            var usr = user.GetType();
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim("Id", user.Id.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-            claims.Add(new Claim("Position", user.Position.ToString()));
-            claims.Add(new Claim("Email", user.Email ?? ""));
-            var roles = GetRoles(user);
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, role.Name));
-            }
-            foreach (var i in usr.GetProperties())
-            {
-                var token = i.GetCustomAttribute<TokenAttribute>();
-                if (token == null)
-                    continue;
-
-                var name = string.IsNullOrEmpty(token.Name) ? i.Name : token.Name;
-
-                if (claims.FirstOrDefault(m => m.Type == name) == null)
-                {
-                    if (i.GetValue(user) != null)
-                        claims.Add(new Claim(name, i.GetValue(user).ToString()));
-                }
-
-
-            }
-            return claims;
-        }
-        //TODO
-       /* public virtual async Task Logout(string access)
-        {
-           GetFirst(m=>m.)
-        }*/
-        public virtual async Task<bool> RegisterAsync(TUser model)
-        {
-            var user = await
-                _dbSet.FirstOrDefaultAsync(m => m.UserName == model.UserName
-                && m.Password == RepositoryState.GetHashString(model.Password));
-            if (user != null) { return false; }
-            model.Password = RepositoryState.GetHashString(model.Password);
-            _dbSet.Add(model);
-            _context.SaveChanges();
-            return true;
         }
         public async Task<bool> Delete(TUser user)
         {
@@ -149,67 +89,13 @@ namespace AuthService
             var roles = _roleService.GetList(IdRoles);
             return roles;
         }
+        public long Count()
+        {
+            return _dbSet.Count();
+        }
+        #endregion
+       
 
-      /*  public virtual async Task<(LoginResult, TUser)> Login(string username, string password)
-        {
-            var user = _dbSet.Where(m => m.UserName == username && m.Password == RepositoryState.GetHashString(password)).FirstOrDefault();
-            if (user == null)
-            {
-
-            }
-            return (Login(user), user);
-        }*/
-        public virtual LoginResult Login(TUser user)
-        {
-            if (user == null) { return null; }
-            var roles = GetRoles(user);
-            SetToken(Claims(user), user);
-            
-            Update(user).Wait();
-            LoginResult loginResult = new LoginResult()
-            {
-                AccessToken = user.Token,
-                UserName = user.UserName,
-                RefreshToken = user.RefreshToken,
-                UserId = user.Id,
-                Roles = roles.Select(m => m.Name).ToList()
-            };
-            return loginResult;
-        }
-        public void SetRefresh(TUser user)
-        {
-            var refresh = "";
-            var random = new Random();
-            for (var i = 0; i < 10; i++) refresh += random.Next(15);
-            user.RefreshToken = RepositoryState.GetHashString(refresh);
-
-        }
-        public LoginResult LoginByRefresh(string refreshToken)
-        {
-           var user= GetFirst(m => m.RefreshToken == refreshToken);
-           return Login(user);
-        }
-        public string SetToken(List<Claim> claims, TUser user = null)
-        {
-            var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            var now = DateTime.Now;
-            var jwt = new JwtSecurityToken(
-                 AuthOptions.ISSUER,
-                 AuthOptions.AUDIENCE,
-                 notBefore: now,
-                 claims: claimsIdentity.Claims,
-                 expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
-                     SecurityAlgorithms.HmacSha256));
-            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-            if (user != null)
-            {
-                user.Token = token;
-                SetRefresh(user);
-                user.LastLoginDate = DateTime.Now;
-            }
-            return token;
-        }
         public async Task<TUser> GetMe(int id)
         {
             return _dbSet.FirstOrDefault(m => m.Id == id);
@@ -229,6 +115,7 @@ namespace AuthService
         {
             return _dbSet.Where(m => true);
         }
+        #region
         public TUser CheckUser(string userName)
         {
             return _dbSet.FirstOrDefault(m => m.UserName == userName);
@@ -239,75 +126,22 @@ namespace AuthService
             var user = _dbSet.FirstOrDefault(m => m.UserName == userName && m.PhoneNumber == phoneNumber);
             return user;
         }
-        public TUser CheckUserByP(string userName, string Password)
+        public TUser CheckUserByUserName(string userName, string Password)
         {
             return _dbSet.FirstOrDefault(m => m.UserName == userName && m.Password == RepositoryState.GetHashString(Password));
         }
+        #endregion
         public TUser GetFirst(Expression<Func<TUser, bool>> expression)
         {
-           return _dbSet.Where(expression).OrderByDescending(m => m.Id).FirstOrDefault();
+            return _dbSet.Where(expression).OrderByDescending(m => m.Id).FirstOrDefault();
             //return _dbSet.FirstOrDefault(expression);
         }
         public IEnumerable<TUser> Find(Expression<Func<TUser, bool>> expression)
         {
             return _dbSet.Where(expression);
         }
-        public long Count()
-        {
-            return _dbSet.Count();
-        }
-        #region Otp
-        public OtpResult CheckOtp(TUser user, string otp)
-        {
-            if (user.LastOtpDate.AddMinutes(3) < DateTime.Now)
-            {
-                return OtpResult.TimeExit;
-            }
-            if (user.ErrorOtpCount > 4)
-            {
-                return OtpResult.MuchError;
-            }
-            if (user.LastOtp == otp)
-            {
-                user.ErrorOtpCount = 0;
-                return OtpResult.Success;
 
-            }
-            user.ErrorOtpCount++;
-            Update(user).Wait();
-            return OtpResult.OtpError;
-        }
-
-        public OtpResult CheckOtp(ClaimsPrincipal claims, string otp)
-        {
-
-            var user = GetByUserName(claims.Identity.Name).Result;
-            return CheckOtp(user, otp);
-        }
-
-        public void SetOtp(ClaimsPrincipal claims, string otp)
-        {
-            var user = GetByUserName(claims.Identity.Name).Result;
-            SetOtp(user, otp);
-        }
-
-        public bool SetOtp(TUser user, string otp)
-        {
-            user.LastOtpDate = DateTime.Now;
-            user.ErrorOtpCount = 0;
-            user.LastOtp = otp;
-            Update(user).Wait();
-            return true;
-        }
-        public void SetOtp(int id, string otp)
-        {
-            SetOtp(GetMe(id).Result, otp);
-        }
-        public void SetOtp(string username, string otp)
-        {
-            SetOtp(GetByUserName(username).Result, otp);
-
-        }
+       
 
         public long Count(Expression<Func<TUser, bool>> expression)
         {
@@ -319,138 +153,82 @@ namespace AuthService
             _context.SaveChanges();
         }
         #region Register
-        public virtual async Task<(LoginResult, TUser)> Login(LoginViewModal model)
-        {
-            var user = _dbSet.Where(m => (m.UserName == model.UserName || m.Email == model.UserName) && m.Password == RepositoryState.GetHashString(model.Password)).FirstOrDefault();
-            if (user == null)
-            {
-                return (null, null);
-            }
 
-            if (AuthOptions.CheckDeviceId)
-            {
-                if (user.CheckDevice(model.DeviceId))
-                {
-                    user.ChangeLastIncome(model.DeviceId);
-                    return (Login(user), user);
-                }
-                //TODO
-                return (null, user);
-            }
-            return (Login(user), user);
-
-        }
-        public async Task<RegisterResult> RegisterAsync(RegisterUser model)
-        {
-            RegisterResult result = new RegisterResult();
-            var user = _dbSet.FirstOrDefault(m => m.UserName == model.UserName || m.Email == model.UserName);
-            if (user != null)
-            {
-                result.IsRegister = false;
-                result.ErrorMessage = "user exist";
-                return result;
-            }
-            user = AddRegister(model);
-            if (AuthOptions.SetNameAsPhone)
-            {
-                model.UserName = RepositoryState.ParsePhone(model.UserName);
-                if (string.IsNullOrEmpty(model.UserName))
-                {
-                    throw new CoreException("fg");
-                }
-                user.PhoneNumber= model.UserName;
-            }
-            _dbSet.Add(user);
-            result.IsRegister = true;
-            result.Name = user.UserName;
-            return result;
-
-        }
-        private TUser AddRegister(RegisterUser model)
-        {
-           var  user = (TUser)Activator.CreateInstance(typeof(TUser));
-            user.UserName = model.UserName;
-            user.UserStatus = UserStatus.NewRegistered;
-            user.Password = model.Password;
-            user.Email = model.Email;
-            return user;
-        }
-
+     
+        #endregion
+        #region Password
         public async Task<bool> RestorePasswor(RestorePasswordModel model)
         {
-            if (!model.IsCompare()) return;
-           var user= GetFirst(m => m.UserName == model.UserName);
-            if(user== null)
+            if (!model.IsCompare()) return false;
+            var user = GetFirst(m => m.UserName == model.UserName);
+            if (user == null)
             {
-                throw new CoreException();
+                throw new CoreException("User Not Valid",5);
             }
             if (!string.IsNullOrEmpty(model.Token))
             {
 
             }
-            if(CheckUserOtp(user, model.Otp))
+            if (CheckUserOtp(user, model.Otp))
             {
                 user.Password = RepositoryState.GetHashString(model.Password);
             }
             else
             {
-                throw new CoreException();
+                //4 Restore Password
+                throw new CoreException("Error Otp",4);
             }
-           await Update(user);
+            await Update(user);
+            return true;
         }
-
         public async Task<bool> ChangePassword(TUser user, ChangePasswordModel model)
         {
             if (!model.IsCompare())
             {
-                throw new CoreException();
+                throw new CoreException("Compare password is not valid",3);
             }
-            if(user.Password!= RepositoryState.GetHashString(model.Password))
+            if (user.Password != RepositoryState.GetHashString(model.Password))
             {
-                throw new CoreException();
+                throw new CoreException(" Passwor is not valid",2);
             }
-           user.Password = RepositoryState.GetHashString(model.Password);
-           await Update(user);
+            user.Password = RepositoryState.GetHashString(model.Password);
+            await Update(user);
             return true;
-         }
-        public bool CheckUserOtp(TUser user, string otp)
-        {
-            if (user.LastOtpDate.AddMinutes(AuthOptions.OtpTime) < DateTime.Now)
-            {
-                throw new CoreException();
-            }
-            if (user.LastOtp == otp)
-            {
-                user.LastOtp = "";
-                user.UserStatus = UserStatus.Active;
-            }
-            else
-            {
-                user.ErrorOtpCount++;
-                throw new CoreException();
-            }
-            
-         } 
-        public async Task<LoginResult> ActivateUser(ActivateUserModel model)
-        {
-            
-            var user= GetFirst(m =>m.UserName== RepositoryState.ParsePhone(model.UserName));
-           if(CheckUserOtp(user, model.Otp))
-            {
-                user.AddDeviceId(model.DeviceId, model.DeviceName);
-                await Update(user);
-                return Login(user);
-            }
-            else
-            {
-                
-            }
-           
         }
         #endregion
-        #endregion
-
-
-
+      
+       
     }
+   
 }
+//Active User,1 
+
+
+
+
+/*public OtpResult CheckOtp(TUser user, string otp)
+       {
+           if (user.LastOtpDate.AddMinutes(3) < DateTime.Now)
+           {
+               return OtpResult.TimeExit;
+           }
+           if (user.ErrorOtpCount > 4)
+           {
+               return OtpResult.MuchError;
+           }
+           if (user.LastOtp == otp)
+           {
+               user.ErrorOtpCount = 0;
+               return OtpResult.Success;
+
+           }
+           user.ErrorOtpCount++;
+           Update(user).Wait();
+           return OtpResult.OtpError;
+       }
+      public OtpResult CheckOtp(ClaimsPrincipal claims, string otp)
+       {
+
+           var user = GetByUserName(claims.Identity.Name).Result;
+           return CheckOtp(user, otp);
+       }*/

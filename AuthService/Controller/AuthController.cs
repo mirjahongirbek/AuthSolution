@@ -4,7 +4,9 @@ using AuthService.ModelView;
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryCore.CoreState;
+using RepositoryCore.Enums;
 using RepositoryCore.Exceptions;
+using RepositoryCore.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -24,7 +26,7 @@ namespace AuthService.Controller
             try
             {
                var loginResult= _user.LoginByRefresh(refreshToken);
-                return loginResult;
+               return loginResult;
                 
             }catch(Exception ext)
             {
@@ -42,7 +44,7 @@ namespace AuthService.Controller
                 {
                     return result.Item1;
                 }
-
+                return null;
             }
             catch (Exception ext)
             {
@@ -65,13 +67,13 @@ namespace AuthService.Controller
             }
         }
         [HttpGet]
-        public virtual async Task<NetResult<SuccessResult>> RestorePassword(string userName)
+        public virtual async Task<NetResult<ResponseData>> RestorePassword(string userName)
         {
             try
             {
                 var otp = RepositoryState.RandomInt();
                 _user.SetOtp(userName, otp);
-
+                return StatusCore.Success;
             }
             catch (Exception ext)
             {
@@ -79,14 +81,14 @@ namespace AuthService.Controller
             }
         }
         [HttpPost]
-        public virtual async Task<NetResult<SuccessResult>> RestorePassword([FromBody]RestorePasswordModel model)
+        public virtual async Task<NetResult<ResponseData>> RestorePassword([FromBody]RestorePasswordModel model)
         {
             try
             {
                 SuccessResult result = new SuccessResult();
                 bool isRestore = await _user.RestorePasswor(model);
-                result.Success = isRestore;
-                return result;
+
+                return StatusCore.Success;
             }
             catch (Exception ext)
             {
@@ -119,7 +121,7 @@ namespace AuthService.Controller
                 SuccessResult result = new SuccessResult();
                var user= _user.Get(UserId);
                if(RepositoryState.GetHashString( user.Password)== RepositoryState.GetHashString(model.Password))
-              result.Success=  _user.ChangePassword(user, model);
+              result.Success= await _user.ChangePassword(user, model);
                 return result;
             }
             catch (Exception ext)

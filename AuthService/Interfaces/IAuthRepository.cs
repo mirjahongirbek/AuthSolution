@@ -55,12 +55,12 @@ namespace AuthService.Interfaces.Service
         #region Check
         TUser CheckUser(string userName);
         TUser CheckUserByPhone(string userName, string phoneNumber);
-        TUser CheckUserByP(string userName, string Password);
+        TUser CheckUserByUserName(string userName, string Password);
         Task<bool> RestorePasswor(RestorePasswordModel model);
         #endregion
         #region Otp
-        OtpResult CheckOtp(TUser user, string otp);
-        OtpResult CheckOtp(ClaimsPrincipal user, string otp);
+       /* OtpResult CheckOtp(TUser user, string otp);*/
+       /* OtpResult CheckOtp(ClaimsPrincipal user, string otp);*/
         void SetOtp(ClaimsPrincipal user, string Otp);
         void SetOtp(int UserId, string otp);
         void SetOtp(string username, string otp);
