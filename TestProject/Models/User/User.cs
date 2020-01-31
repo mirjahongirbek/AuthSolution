@@ -5,4 +5,9 @@ namespace TestProject.Models.User
     {
 
     }
+    public class UserRole: IdentityUserRole
+    {
+
+    }
+    
 }

@@ -8,3 +8,12 @@ C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\Auth
 C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\AuthService.dll
 C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\RepositoryCore.pdb
 C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.csproj.CopyComplete
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\AuthService.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\CoreClient.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\CoreResult.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\LiteRepository.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\CoreResult.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\CoreClient.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\LiteRepository.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.pdb

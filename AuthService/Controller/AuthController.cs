@@ -21,6 +21,7 @@ namespace AuthService.Controller
         {
             _user = auth;
         }
+        [HttpGet]
         public virtual async Task<NetResult<LoginResult>> RefreshToken(string refreshToken)
         {
             try

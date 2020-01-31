@@ -14,9 +14,14 @@ using System.Threading.Tasks;
 
 namespace AuthService.Services
 {
-    //Login Partial
+    //Login Partial class
     public partial class IdentityUserService<TUser, TRole, TUserRole>
     {
+        /// <summary>
+        ///  this Method use for Activate user Using sms confirm
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<LoginResult> ActivateUser(ActivateUserModel model)
         {
 
@@ -33,7 +38,11 @@ namespace AuthService.Services
             }
 
         }
-
+        /// <summary>
+        /// this method used for Login result Login Result
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public virtual LoginResult Login(TUser user)
         {
             if (user == null) { return null; }
@@ -51,6 +60,10 @@ namespace AuthService.Services
             };
             return loginResult;
         }
+        /// <summary>
+        /// Set Refresh token for user
+        /// </summary>
+        /// <param name="user"></param>
         public void SetRefresh(TUser user)
         {
             var refresh = "";
@@ -59,6 +72,11 @@ namespace AuthService.Services
             user.RefreshToken = RepositoryState.GetHashString(refresh);
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <returns></returns>
         public LoginResult LoginByRefresh(string refreshToken)
         {
             var user = GetFirst(m => m.RefreshToken == refreshToken);
