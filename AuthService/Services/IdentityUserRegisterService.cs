@@ -15,6 +15,11 @@ namespace AuthService.Services
         public async Task<RegisterResult> RegisterAsync(RegisterUser model)
         {
             RegisterResult result = new RegisterResult();
+            
+            if (AuthOptions.SetNameAsPhone)
+            {
+                model.UserName = RepositoryState.ParsePhone(model.UserName);
+            }
             var user = _dbSet.FirstOrDefault(m => m.UserName == model.UserName || m.Email == model.UserName);
             if (user != null)
             {
@@ -31,7 +36,8 @@ namespace AuthService.Services
                 }
                 user.PhoneNumber = model.UserName;
             }
-            _dbSet.Add(user);
+            //_dbSet.Add(user);
+            Add(user);
             result.IsRegister = true;
             result.Name = user.UserName;
             return result;

@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
 using System.Reflection;
-
+using AuthService;
+using AuthService.Interfaces.Service;
+using AuthService.Services;
+using CoreResults;
+using EntityRepository.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using Swashbuckle.AspNetCore.Filters;
-
 using Swashbuckle.AspNetCore.Swagger;
+using TestProject.Models.Db;
+using TestProject.Models.User;
 
 namespace TestProject
 {
@@ -24,7 +27,31 @@ namespace TestProject
         }
 
         public IConfiguration Configuration { get; }
-        public void SwaggerService(IServiceCollection services)
+       
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddScoped<IDbContext, AuthDataContext>();
+            services.AddScoped<IAuthRepository<User, UserRole>, IdentityUserService<User, Role, UserRole>>();
+            services.AddScoped<IRoleRepository<Role>, IdentityRoleService<Role>>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           services.AddContextWithSwagger();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            app.ContextWithSwagger();
+            app.UseMvc();
+          
+        }
+    }
+}
+/* public void SwaggerService(IServiceCollection services)
         {
             services.AddSwaggerDocument();
             services.AddSwaggerExamples();
@@ -70,30 +97,4 @@ namespace TestProject
                 //... and tell Swagger to use those XML comments.
                 c.IncludeXmlComments(xmlPath);
             });
-        }
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            SwaggerService(services);
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
-            SwaggerBuilderExtensions.UseSwagger(app);
-            app.UseSwaggerUi3();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "IVR API v1");
-                c.RoutePrefix = "swagger/ui";
-            });
-        }
-    }
-}
+        }*/

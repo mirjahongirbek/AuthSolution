@@ -21,7 +21,8 @@ using LoginResult = AuthService.ModelView.LoginResult;
 namespace AuthService.Services
 {
       
-    public partial class IdentityUserService<TUser, TRole, TUserRole> : IAuthRepository<TUser, TUserRole>
+    public partial class IdentityUserService<TUser, TRole, TUserRole>
+        : IAuthRepository<TUser, TUserRole>
        where TUser : IdentityUser
        where TUserRole : IdentityUserRole
        where TRole : IdentityRole
@@ -100,6 +101,12 @@ namespace AuthService.Services
         {
             return _dbSet.FirstOrDefault(m => m.Id == id);
         }
+        private bool Add(TUser user)
+        {
+            _dbSet.Add(user);
+            Save();
+            return true;
+        }
         public bool AddUser(TUser user)
         {
             var existUser = GetByUserName(user.UserName).Result;
@@ -107,8 +114,7 @@ namespace AuthService.Services
             {
                 return false;
             }
-            _dbSet.Add(user);
-            Save();
+            Add(user);
             return true;
         }
         public IEnumerable<TUser> FindAll()

@@ -15,6 +15,7 @@ namespace AuthService.Services
             var user = GetByUserName(claims.Identity.Name).Result;
             SetOtp(user, otp);
         }
+
         public bool SetOtp(TUser user, string otp)
         {
             user.LastOtpDate = DateTime.Now;

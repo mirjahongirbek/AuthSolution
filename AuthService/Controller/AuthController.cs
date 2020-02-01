@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AuthService.Controller
 {
-    public class AuthController<TUser, TUserRole> : ControllerBase
+    public abstract class AuthController<TUser, TUserRole> : ControllerBase
          where TUser : IdentityUser
          where TUserRole : IdentityUserRole
     {
@@ -45,6 +45,13 @@ namespace AuthService.Controller
                 {
                     return result.Item1;
                 }
+
+                if (result.Item2!= null|| result.Item2.ShouldSendOtp)
+                {
+                   var otp= RepositoryState.RandomInt();
+                    _user.SetOtp(result.Item2, otp);
+                    SendSms(result.Item2.PhoneNumber, otp);
+                }
                 return null;
             }
             catch (Exception ext)
@@ -52,6 +59,7 @@ namespace AuthService.Controller
                 return ext;
             }
         }
+
         [HttpPost]
         public virtual async Task<NetResult<RegisterResult>> Register([FromBody] RegisterUser model)
         {
@@ -67,6 +75,7 @@ namespace AuthService.Controller
                 return ext;
             }
         }
+        protected abstract void SendSms(string phoneNumber , string otpCode);
         [HttpGet]
         public virtual async Task<NetResult<ResponseData>> RestorePassword(string userName)
         {

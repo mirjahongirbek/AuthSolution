@@ -1,6 +1,7 @@
 ﻿using AuthService.Controller;
 using AuthService.Interfaces.Service;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using TestProject.Models.User;
 
 namespace TestProject.Controllers
@@ -15,6 +16,10 @@ namespace TestProject.Controllers
             _user = user; 
         }
 
-
+        protected override void SendSms(string phoneNumber, string otpCode)
+        {
+            Console.WriteLine("Phone number :" + phoneNumber + "   Otp Code: " + otpCode);
+        }
     }
+    
 }

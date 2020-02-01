@@ -225,6 +225,8 @@ namespace AuthService.Models
             Devices = JsonConvert.SerializeObject(userDevice);
 
         }
+        [NotMapped]
+        public bool ShouldSendOtp { get; set; }
         public void ChangeLastIncome(string deviceId)
         {
             if (!CheckDevice(deviceId))

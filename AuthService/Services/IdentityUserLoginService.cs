@@ -119,10 +119,15 @@ namespace AuthService.Services
         }
         public virtual async Task<(LoginResult, TUser)> Login(LoginViewModal model)
         {
+            if (AuthOptions.SetNameAsPhone)
+            {
+                model.UserName = RepositoryState.ParsePhone(model.UserName);
+            }
             var user = _dbSet.Where(m => (m.UserName == model.UserName || m.Email == model.UserName) && m.Password == RepositoryState.GetHashString(model.Password)).FirstOrDefault();
             if (user == null)
             {
-                return (null, null);
+                throw new CoreException("User Name or Password not Found",7);
+
             }
 
             if (AuthOptions.CheckDeviceId)
@@ -132,6 +137,7 @@ namespace AuthService.Services
                     user.ChangeLastIncome(model.DeviceId);
                     return (Login(user), user);
                 }
+                user.ShouldSendOtp = true;
                 //TODO
                 return (null, user);
             }

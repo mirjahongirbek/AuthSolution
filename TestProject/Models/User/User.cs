@@ -9,5 +9,9 @@ namespace TestProject.Models.User
     {
 
     }
+    public class Role :  IdentityRole
+    {
+
+    }
     
 }
