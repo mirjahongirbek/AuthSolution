@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +21,38 @@ namespace AuthService
         public static TimeSpan Otp { get; set; } = TimeSpan.FromSeconds(180);
         public static bool IsSendOtp { get; set; } = true;
         public static bool SetNameAsPhone { get; set; } = true;
-        public static int OtpTime { get; set; } = 3;
+        public static int OtpTime { get; set; } = 100;
+        public static void AddAuthSolutionService(this IServiceCollection service, string Key)
+        {
+            if (Key.Length >= 6)
+            {
+                AuthOptions.KEY = Key; 
+            }
+            service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                     .AddJwtBearer(options =>
+                     {
+                         options.RequireHttpsMetadata = false;
+                         options.TokenValidationParameters = new TokenValidationParameters
+                         {
+                            // укзывает, будет ли валидироваться издатель при валидации токена
+                            ValidateIssuer = true,
+                            // строка, представляющая издателя
+                            ValidIssuer = ISSUER,
+
+                            // будет ли валидироваться потребитель токена
+                            ValidateAudience = true,
+                            // установка потребителя токена
+                            ValidAudience = AUDIENCE,
+                            // будет ли валидироваться время существования
+                            ValidateLifetime = true,
+
+                            // установка ключа безопасности
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            // валидация ключа безопасности
+                            ValidateIssuerSigningKey = true,
+                         };
+                     });
+        }
     }
+
 }

@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+
 namespace AuthService
 {
     public class IdentityRoleService<TRole> : IRoleRepository<TRole>
@@ -78,6 +80,17 @@ namespace AuthService
         public IEnumerable<TRole> FindAll()
         {
             return _dbSet.Where(m => true);
+        }
+
+        public async Task<bool> AddRole(TRole model)
+        {
+           var role= _dbSet.FirstOrDefault(m => m.NormalizedName == model.Name.ToLower());
+            if (role != null) return false;
+
+            model.NormalizedName = model.Name.ToLower();
+            Add(model);
+            return true;
+
         }
     }
 }

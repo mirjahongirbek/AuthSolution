@@ -24,13 +24,17 @@ namespace AuthService.Services
             Update(user).Wait();
             return true;
         }
-        public void SetOtp(int id, string otp)
+        public TUser SetOtp(int id, string otp)
         {
-            SetOtp(GetMe(id).Result, otp);
+           var user= GetMe(id).Result;
+            SetOtp(user, otp);
+            return user;
         }
-        public void SetOtp(string username, string otp)
+        public TUser SetOtp(string username, string otp)
         {
-            SetOtp(GetByUserName(username).Result, otp);
+           var user= GetByUserName(username).Result;
+            SetOtp(user, otp);
+            return user;
 
         }
         public bool CheckUserOtp(TUser user, string otp)

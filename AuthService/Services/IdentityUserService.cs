@@ -62,7 +62,17 @@ namespace AuthService.Services
         }
         public virtual async Task<TUser> GetByUserName(string userName)
         {
-            return _dbSet.FirstOrDefault(m => m.UserName == userName);
+            TUser user = null;
+            if (AuthOptions.SetNameAsPhone)
+            {
+                user = _dbSet.FirstOrDefault(m => m.UserName == RepositoryState.ParsePhone(userName));
+            }
+            else
+            {
+                user = _dbSet.FirstOrDefault(m => m.UserName == userName);
+            }
+            return user;
+            //return _dbSet.FirstOrDefault(m => m.UserName == userName);
         }
         public async Task<bool> Delete(TUser user)
         {
@@ -166,7 +176,8 @@ namespace AuthService.Services
         public async Task<bool> RestorePasswor(RestorePasswordModel model)
         {
             if (!model.IsCompare()) return false;
-            var user = GetFirst(m => m.UserName == model.UserName);
+
+            var user = await GetByUserName(model.UserName);//GetFirst(m => m.UserName == model.UserName);
             if (user == null)
             {
                 throw new CoreException("User Not Valid",5);
@@ -193,7 +204,7 @@ namespace AuthService.Services
             {
                 throw new CoreException("Compare password is not valid",3);
             }
-            if (user.Password != RepositoryState.GetHashString(model.Password))
+            if (user.Password != RepositoryState.GetHashString(model.OldPassword))
             {
                 throw new CoreException(" Passwor is not valid",2);
             }

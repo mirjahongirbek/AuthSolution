@@ -4723,6 +4723,8 @@
         "dependencies": {
           "CoreResult": "0.0.2",
           "EntityRepository": "2.0.1",
+          "Microsoft.AspNetCore.Authentication": "2.2.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "2.2.0",
           "Microsoft.AspNetCore.Mvc.Abstractions": "2.2.0",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
           "RepositoryCore": "2.0.0.3",

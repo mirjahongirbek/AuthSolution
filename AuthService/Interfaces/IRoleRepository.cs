@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace AuthService.Interfaces.Service
 {
@@ -19,5 +20,6 @@ namespace AuthService.Interfaces.Service
         T GetFirst(Expression<Func<T, bool>> expression);
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
         List<T> GetList(List<int> roles);
+       Task<bool> AddRole(T model);
     }
 }

@@ -33,6 +33,7 @@ namespace TestProject
         {
             services.AddScoped<IDbContext, AuthDataContext>();
             services.AddScoped<IAuthRepository<User, UserRole>, IdentityUserService<User, Role, UserRole>>();
+            services.AddAuthSolutionService("mysupersecret_secretkey!123");
             services.AddScoped<IRoleRepository<Role>, IdentityRoleService<Role>>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
            services.AddContextWithSwagger();
@@ -45,6 +46,8 @@ namespace TestProject
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseAuthentication();
+
             app.ContextWithSwagger();
             app.UseMvc();
           

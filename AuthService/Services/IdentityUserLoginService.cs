@@ -25,7 +25,15 @@ namespace AuthService.Services
         public async Task<LoginResult> ActivateUser(ActivateUserModel model)
         {
 
-            var user = GetFirst(m => m.UserName == RepositoryState.ParsePhone(model.UserName));
+            TUser user = null;
+            if (AuthOptions.SetNameAsPhone)
+            {
+                user = GetFirst(m => m.UserName == RepositoryState.ParsePhone(model.UserName));
+            }
+            else
+            {
+                user = GetFirst(m => m.UserName == model.UserName);
+            }
             if (CheckUserOtp(user, model.Otp))
             {
                 user.AddDeviceId(model.DeviceId, model.DeviceName);
@@ -48,8 +56,7 @@ namespace AuthService.Services
             if (user == null) { return null; }
             var roles = GetRoles(user);
             SetToken(Claims(user), user);
-
-            Update(user).Wait();
+                 Update(user).Wait();
             LoginResult loginResult = new LoginResult()
             {
                 AccessToken = user.Token,

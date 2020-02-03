@@ -1,6 +1,7 @@
 ﻿using AuthService.Interfaces.Service;
 using AuthService.Models;
 using AuthService.ModelView;
+using AuthService.ModelView.Roles;
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryCore.CoreState;
@@ -8,10 +9,49 @@ using RepositoryCore.Enums;
 using RepositoryCore.Exceptions;
 using RepositoryCore.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AuthService.Controller
 {
+
+    public class RoleManagerController<TRole> : ControllerBase
+        where TRole : IdentityRole
+    {
+        IRoleRepository<TRole> _roles;
+        public RoleManagerController(IRoleRepository<TRole> role)
+        {
+            _roles = role;
+        }
+        [HttpPost]
+        public virtual async Task<NetResult<SuccessResult>> AddRole([FromBody] TRole model)
+        {
+            SuccessResult result = new SuccessResult();
+            bool success = await _roles.AddRole(model);
+            result.Id = model.Id;
+            return result;
+        }
+        [HttpGet]
+        public virtual NetResult<List<RoleResult<TRole>>> GetRoles()
+        {
+            var result = _roles.FindAll().Select(m => new RoleResult<TRole>(m)).ToList();
+            return result;
+        }
+        [HttpGet]
+        public virtual NetResult<RoleResult<TRole>> GetRoleById(int id)
+        {
+            var role = _roles.Get(id);
+            var result = new RoleResult<TRole>(role);
+            return result;
+
+        }
+
+    }
+    public class UserRoleController<TUser, TUserRole, TRole> : ControllerBase
+    {
+
+    }
     public abstract class AuthController<TUser, TUserRole> : ControllerBase
          where TUser : IdentityUser
          where TUserRole : IdentityUserRole
@@ -26,10 +66,11 @@ namespace AuthService.Controller
         {
             try
             {
-               var loginResult= _user.LoginByRefresh(refreshToken);
-               return loginResult;
-                
-            }catch(Exception ext)
+                var loginResult = _user.LoginByRefresh(refreshToken);
+                return loginResult;
+
+            }
+            catch (Exception ext)
             {
                 return ext;
             }
@@ -46,9 +87,9 @@ namespace AuthService.Controller
                     return result.Item1;
                 }
 
-                if (result.Item2!= null|| result.Item2.ShouldSendOtp)
+                if (result.Item2 != null || result.Item2.ShouldSendOtp)
                 {
-                   var otp= RepositoryState.RandomInt();
+                    var otp = RepositoryState.RandomInt();
                     _user.SetOtp(result.Item2, otp);
                     SendSms(result.Item2.PhoneNumber, otp);
                 }
@@ -75,14 +116,15 @@ namespace AuthService.Controller
                 return ext;
             }
         }
-        protected abstract void SendSms(string phoneNumber , string otpCode);
+        protected abstract void SendSms(string phoneNumber, string otpCode);
         [HttpGet]
         public virtual async Task<NetResult<ResponseData>> RestorePassword(string userName)
         {
             try
             {
                 var otp = RepositoryState.RandomInt();
-                _user.SetOtp(userName, otp);
+                var user = _user.SetOtp(userName, otp);
+                SendSms(user.PhoneNumber, otp);
                 return StatusCore.Success;
             }
             catch (Exception ext)
@@ -97,7 +139,6 @@ namespace AuthService.Controller
             {
                 SuccessResult result = new SuccessResult();
                 bool isRestore = await _user.RestorePasswor(model);
-
                 return StatusCore.Success;
             }
             catch (Exception ext)
@@ -111,6 +152,12 @@ namespace AuthService.Controller
             try
             {
                 SuccessResult result = new SuccessResult();
+
+                if (AuthOptions.SetNameAsPhone && !userName.Contains("@"))
+                {
+
+                    userName = RepositoryState.ParsePhone(userName);
+                }
                 var user = _user.Find(m => m.UserName == userName || m.Email == userName);
                 if (user == null)
                     result.Success = false;
@@ -129,9 +176,9 @@ namespace AuthService.Controller
             try
             {
                 SuccessResult result = new SuccessResult();
-               var user= _user.Get(UserId);
-               if(RepositoryState.GetHashString( user.Password)== RepositoryState.GetHashString(model.Password))
-              result.Success= await _user.ChangePassword(user, model);
+                var user = _user.Get(UserId);
+                if (RepositoryState.GetHashString(user.Password) == RepositoryState.GetHashString(model.OldPassword))
+                    result.Success = await _user.ChangePassword(user, model);
                 return result;
             }
             catch (Exception ext)
@@ -144,7 +191,7 @@ namespace AuthService.Controller
         {
             try
             {
-              return await  _user.ActivateUser(model);
+                return await _user.ActivateUser(model);
 
             }
             catch (Exception ext)
@@ -152,16 +199,21 @@ namespace AuthService.Controller
                 return ext;
             }
         }
-        
-        private int UserId { get {
-               var userId= User.FindFirst("UserId")?.Value;
+
+        private int UserId
+        {
+            get
+            {
+                var userId = User.FindFirst("Id")?.Value;
                 if (string.IsNullOrEmpty(userId))
                 {
                     Response.StatusCode = 401;
-                    throw new CoreException("Anuthorize",401);
+                    throw new CoreException("Anuthorize", 401);
 
                 }
-                return int.Parse(userId);            
-            } }
+                return int.Parse(userId);
+            }
+        }
     }
+
 }

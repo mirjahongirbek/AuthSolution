@@ -62,8 +62,8 @@ namespace AuthService.Interfaces.Service
        /* OtpResult CheckOtp(TUser user, string otp);*/
        /* OtpResult CheckOtp(ClaimsPrincipal user, string otp);*/
         void SetOtp(ClaimsPrincipal user, string Otp);
-        void SetOtp(int UserId, string otp);
-        void SetOtp(string username, string otp);
+        TUser SetOtp(int UserId, string otp);
+        TUser SetOtp(string username, string otp);
         bool SetOtp(TUser user, string otp);
        Task<bool> ChangePassword(TUser user, ChangePasswordModel model);
         Task<LoginResult> ActivateUser(ActivateUserModel model);
