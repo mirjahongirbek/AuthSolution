@@ -1,3 +1,12 @@
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\appsettings.Development.json
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\appsettings.json
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.deps.json
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.runtimeconfig.json
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.runtimeconfig.dev.json
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.dll
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.pdb
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.xml
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\AuthService.dll
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\CoreClient.dll
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\CoreResult.dll
@@ -6,6 +15,7 @@ C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\Lite
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\RepositoryCore.dll
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\EntityRepository.pdb
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\RepositoryCore.pdb
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\AuthService.pdb
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\CoreClient.pdb
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\CoreResult.pdb
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\LiteRepository.pdb
@@ -15,16 +25,6 @@ C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\Test
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.AssemblyInfoInputs.cache
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.AssemblyInfo.cs
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.RazorTargetAssemblyInfo.cache
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\appsettings.Development.json
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\appsettings.json
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.deps.json
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.runtimeconfig.json
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.runtimeconfig.dev.json
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.dll
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.pdb
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\AuthService.pdb
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.csproj.CopyComplete
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.dll
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.pdb
-C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\TestProject.xml

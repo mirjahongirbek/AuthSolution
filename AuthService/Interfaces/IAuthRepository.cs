@@ -33,9 +33,6 @@ namespace AuthService.Interfaces.Service
         #region Role
         void AddUserRole(TUserRole userRole);
         #endregion
-
-      /*  Task Logout(string access);*/
-               DbSet<TUser> DbSet { get; }
         Task<bool> Delete(int id);
         LoginResult LoginByRefresh(string refreshToken);
         LoginResult Login(TUser user);
@@ -48,7 +45,7 @@ namespace AuthService.Interfaces.Service
         Task<ClaimsIdentity> LoginClaims(string username, string password);
         Task<bool> Delete(TUser user);
         Task<(LoginResult, TUser)> Login(LoginViewModal model);
-     /*   Task<(LoginResult, TUser)> Login(string username, string password);*/
+        /*   Task<(LoginResult, TUser)> Login(string username, string password);*/
         void SetRefresh(TUser user);
         string SetToken(List<Claim> claims, TUser user);
 
@@ -59,13 +56,13 @@ namespace AuthService.Interfaces.Service
         Task<bool> RestorePasswor(RestorePasswordModel model);
         #endregion
         #region Otp
-       /* OtpResult CheckOtp(TUser user, string otp);*/
-       /* OtpResult CheckOtp(ClaimsPrincipal user, string otp);*/
+        /* OtpResult CheckOtp(TUser user, string otp);*/
+        /* OtpResult CheckOtp(ClaimsPrincipal user, string otp);*/
         void SetOtp(ClaimsPrincipal user, string Otp);
         TUser SetOtp(int UserId, string otp);
         TUser SetOtp(string username, string otp);
         bool SetOtp(TUser user, string otp);
-       Task<bool> ChangePassword(TUser user, ChangePasswordModel model);
+        Task<bool> ChangePassword(TUser user, ChangePasswordModel model);
         Task<LoginResult> ActivateUser(ActivateUserModel model);
         #endregion
 

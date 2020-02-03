@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using RepositoryCore.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -53,6 +55,21 @@ namespace AuthService
                          };
                      });
         }
+        public static int UserId (this ControllerBase cBase)
+        {
+            var userId = cBase.User.FindFirst("Id")?.Value;
+            if (string.IsNullOrEmpty(userId))
+            {
+              cBase.Response.StatusCode = 401;
+                throw new CoreException("Anuthorize", 401);
+
+            }
+            return int.Parse(userId);
+        }
+       /* internal static T CreateObj<T>(this T create)
+        {
+           return (T)Activator.CreateInstance(typeof(T));
+        }*/
     }
 
 }

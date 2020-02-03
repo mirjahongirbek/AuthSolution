@@ -8,6 +8,16 @@ namespace TestProject.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    public class RolesController: RoleManagerController<Role>
+    {
+        RolesController(IRoleRepository<Role> role):base(role)
+        {
+
+        }
+
+    }
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class AuthController : AuthController<User, UserRole>
     {
         IAuthRepository<User, UserRole> _user;

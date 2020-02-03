@@ -131,6 +131,12 @@ namespace TestProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
+                    b.Property<int>("AddUserId")
+                        .HasColumnName("add_user_id");
+
+                    b.Property<string>("Changes")
+                        .HasColumnName("changes");
+
                     b.Property<int>("RoleId")
                         .HasColumnName("role_id");
 

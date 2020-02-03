@@ -20,6 +20,6 @@ namespace AuthService.Interfaces.Service
         T GetFirst(Expression<Func<T, bool>> expression);
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
         List<T> GetList(List<int> roles);
-       Task<bool> AddRole(T model);
+       Task<bool> AddRole(T model, int UserId);
     }
 }

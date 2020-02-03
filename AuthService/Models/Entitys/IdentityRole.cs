@@ -81,6 +81,8 @@ namespace AuthService.Models
         /// </summary>
         [Column("actions")]
         public string Actions { get; set; }
+        [Column("changes")]
+        public string Changes { get; set; }
         [NotMapped]
         public List<RoleAction> ActionsList { get; set; }
     }

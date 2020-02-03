@@ -1,10 +1,13 @@
-﻿using RepositoryCore.Interfaces;
+﻿using Newtonsoft.Json;
+using RepositoryCore.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AuthService.Models
 {
-    public class IdentityUserRole:IEntity<int>
+    public class IdentityUserRole : IEntity<int>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,22 +24,55 @@ namespace AuthService.Models
         /// </summary>
         [Column("role_id")]
         public virtual int RoleId { get; set; }
-    }
-   /* public class LoginResult
-    {
-        public LoginResult()
+        [Column("add_user_id")]
+        public virtual int AddUserId { get; set; }
+        [Column("changes")]
+        public virtual string Changes { get; set; }
+        [NotMapped]
+        public List<UserRoleChange> UserRoleChange
         {
-            Roles = new List<string>();
-
+            get
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(Changes)) return new List<UserRoleChange>();
+                    var result = JsonConvert.DeserializeObject<List<UserRoleChange>>(Changes);
+                    return result;
+                }
+                catch (Exception ext)
+                {
+                    return new List<UserRoleChange>();
+                }
+            }
         }
-        public string AccessToken { get; set; }
-        public string UserName { get; set; }
-        public string RefreshToken { get; set; }
-        public List<string> Roles { get; set; }
-        public int MaxPosition { get; set; }
-        public List<string> Actions { get; set; }
-        public int MyId { get; set; }
-    }*/
+        public void AddUserRole(UserRoleChange userRoleChange)
+        {
+            var addModel = UserRoleChange;
+            addModel.Add(userRoleChange);
+            Changes = JsonConvert.SerializeObject(addModel);
+        }
+    }
+    public class UserRoleChange
+    {
+        public int ChangeUserId { get; set; }
+        public DateTime ChangeDate { get; set; }
+        public string Description { get; set; }
+    }
+    /* public class LoginResult
+     {
+         public LoginResult()
+         {
+             Roles = new List<string>();
+
+         }
+         public string AccessToken { get; set; }
+         public string UserName { get; set; }
+         public string RefreshToken { get; set; }
+         public List<string> Roles { get; set; }
+         public int MaxPosition { get; set; }
+         public List<string> Actions { get; set; }
+         public int MyId { get; set; }
+     }*/
 
 
 }
