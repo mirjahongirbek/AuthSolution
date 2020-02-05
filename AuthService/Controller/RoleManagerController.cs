@@ -4,6 +4,7 @@ using AuthService.ModelView;
 using AuthService.ModelView.Roles;
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,14 +23,14 @@ namespace AuthService.Controller
         public virtual async Task<NetResult<SuccessResult>> AddRole([FromBody] TRole model)
         {
             SuccessResult result = new SuccessResult();
-            bool success = await _roles.AddRole(model, this.UserId);
+            bool success = await _roles.AddRole(model, this.UserId());
             result.Id = model.Id;
             return result;
         }
         [HttpGet]
-        public virtual NetResult<List<RoleResult<TRole>>> GetRoles()
+        public virtual NetResult<List<RoleResult<TRole>>> GetActiveRoles()
         {
-            var result = _roles.FindAll().Select(m => new RoleResult<TRole>(m)).ToList();
+            var result = _roles.Find(m=>m.TableStatus== RepositoryCore.Enums.Enum.TableStatus.Active).Select(m => new RoleResult<TRole>(m)).ToList();
             return result;
         }
         [HttpGet]
@@ -40,14 +41,35 @@ namespace AuthService.Controller
             return result;
         }
         [HttpDelete]
-        public virtual NetResult<object> DeleteRole(int id)
-        {
-            return null;
+        public virtual async Task<NetResult<SuccessResult>> DeleteRole(int id)
+        { SuccessResult result = new SuccessResult();
+            try
+            {
+               
+               result.Success=await _roles.DeleteRole(id, this.UserId());
+                
+            }
+            catch(Exception ext)
+            {
+                result.Success = false;
+                
+            }
+            return result;
+
         }
         [HttpPut]
-        public virtual NetResult<object> UpdateRole([FromBody]TRole model)
+        public virtual async Task<NetResult<SuccessResult>> UpdateRole([FromBody]TRole model)
         {
-            return null;
+            SuccessResult result = new SuccessResult();
+            try
+            {
+               result.Success=await _roles.UpdateRole(model, this.UserId());
+
+            }catch(Exception ext)
+            {
+                result.Success = false;
+            }
+            return result;
         }
 
     }

@@ -58,6 +58,15 @@ namespace AuthService.Models
         public DateTime ChangeDate { get; set; }
         public string Description { get; set; }
     }
+    public class DeleteData
+    {
+        public int Id { get; set; }
+        public string Data { get; set; }
+        public string TableName { get; set; }
+        public string SchemeName { get; set; }
+        public DateTime DateTime { get; set; }
+        public int UserId { get; set; }
+    }
     /* public class LoginResult
      {
          public LoginResult()

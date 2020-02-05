@@ -3,6 +3,7 @@ using AuthService.Interfaces.Service;
 using AuthService.Models;
 using EntityRepository.Context;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +82,15 @@ namespace AuthService
         {
             return _dbSet.Where(m => true);
         }
+        public async Task<bool> UpdateRole(TRole model, int userId)
+        {
+           var role= Get(model.Id);
+            role.AddChanges(userId, "Update Role");
+            role.Name = model.Name;
+            role.Actions = JsonConvert.SerializeObject(model.ActionsList);
+            Update(role);
+            return true;
+        }
 
         public async Task<bool> AddRole(TRole model, int userId)
         {
@@ -88,10 +98,18 @@ namespace AuthService
             if (role != null) return false;
 
             model.NormalizedName = model.Name.ToLower();
-            model.
+            model.AddChanges(userId, "add Role");
             Add(model);
             return true;
 
+        }
+
+        public async Task<bool> DeleteRole(int id, int userId)
+        {
+           var role= Get(id);
+            role.TableStatus = RepositoryCore.Enums.Enum.TableStatus.Deleted;
+            Update(role);
+            return true;
         }
     }
 }

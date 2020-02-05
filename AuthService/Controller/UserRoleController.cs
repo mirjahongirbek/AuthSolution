@@ -12,21 +12,24 @@ using System.Threading.Tasks;
 
 namespace AuthService.Controller
 {
-    public class UserRoleController<TUser, TUserRole, TRole> : ControllerBase
+    
+    public class UserRoleController<TUser, TUserRole, TRole, TDeleteData> : ControllerBase
          where TUser : IdentityUser
          where TUserRole : IdentityUserRole
           where TRole : IdentityRole
+        where TDeleteData:DeleteData
     {
-        IAuthRepository<TUser, TUserRole> _user;
-        IRoleRepository<TRole> _roles;
-        IUserRoleRepository<TUser, TRole, TUserRole> _userRole;
-        public UserRoleController(IAuthRepository<TUser, TUserRole> user, IRoleRepository<TRole> roles,
-            IUserRoleRepository<TUser, TRole, TUserRole> userRole
+       /* IAuthRepository<TUser, TUserRole> _user;
+        IRoleRepository<TRole> _roles;*/
+        IUserRoleRepository<TUser, TRole, TUserRole, TDeleteData> _userRole;
+        public UserRoleController(IUserRoleRepository<TUser, TRole, TUserRole, TDeleteData> userRole
+            
             )
         {
-            _user = user;
-            _roles = roles;
+          /*  _user = user;
+            _roles = roles;*/
             _userRole = userRole;
+            
         }
         [HttpPost]
         public async Task<NetResult<SuccessResult>> AddUserToRole([FromBody]AddUserRoleModel model)
@@ -52,6 +55,22 @@ namespace AuthService.Controller
                 return ext;
             }
         }
+        [HttpPost]
+        public async Task<object> DeleteUserRole([FromBody]AddUserRoleModel model)
+        {
+            SuccessResult result = new SuccessResult();
+            try
+            {
+               result.Success=await _userRole.DeleteUserRole(model, this.UserId());
+
+            }catch(Exception ext)
+            {
+                result.Success = false;    
+            }
+            return result;
+
+        }
+
         
 
 

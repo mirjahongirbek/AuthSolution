@@ -21,5 +21,7 @@ namespace AuthService.Interfaces.Service
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
         List<T> GetList(List<int> roles);
        Task<bool> AddRole(T model, int UserId);
+        Task<bool> DeleteRole(int id, int userId);
+        Task<bool> UpdateRole(T role, int userId);
     }
 }

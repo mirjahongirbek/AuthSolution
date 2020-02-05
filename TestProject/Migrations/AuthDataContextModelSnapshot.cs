@@ -16,6 +16,26 @@ namespace TestProject.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity("AuthService.Models.DeleteData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Data");
+
+                    b.Property<DateTime>("DateTime");
+
+                    b.Property<string>("SchemeName");
+
+                    b.Property<string>("TableName");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeleteData");
+                });
+
             modelBuilder.Entity("TestProject.Models.User.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -24,6 +44,9 @@ namespace TestProject.Migrations
 
                     b.Property<string>("Actions")
                         .HasColumnName("actions");
+
+                    b.Property<string>("Changes")
+                        .HasColumnName("changes");
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnName("concurrency_stamp");
@@ -42,6 +65,9 @@ namespace TestProject.Migrations
 
                     b.Property<int>("Roles")
                         .HasColumnName("roles");
+
+                    b.Property<int>("TableStatus")
+                        .HasColumnName("table_status");
 
                     b.HasKey("Id");
 

@@ -6,7 +6,7 @@ namespace TestProject.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
+          /*  migrationBuilder.AddColumn<int>(
                 name: "add_user_id",
                 table: "UserRoles",
                 nullable: false,
@@ -15,7 +15,7 @@ namespace TestProject.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "changes",
                 table: "UserRoles",
-                nullable: true);
+                nullable: true);*/
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

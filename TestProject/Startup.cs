@@ -4,7 +4,10 @@ using System.IO;
 using System.Reflection;
 using AuthService;
 using AuthService.Interfaces.Service;
+using AuthService.Models;
 using AuthService.Services;
+using AuthService.Services.MinorData;
+using AuthService.Services.UserRole;
 using CoreResults;
 using EntityRepository.Context;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +38,8 @@ namespace TestProject
             services.AddScoped<IAuthRepository<User, UserRole>, IdentityUserService<User, Role, UserRole>>();
             services.AddAuthSolutionService("mysupersecret_secretkey!123");
             services.AddScoped<IRoleRepository<Role>, IdentityRoleService<Role>>();
+            services.AddScoped<IDeleteDataService<DeleteData>, DeleteDataService<DeleteData>>();
+            services.AddScoped<IUserRoleRepository<User, Role, UserRole,DeleteData>, UserRoleRepositoryService<User, Role, UserRole, DeleteData>>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
            services.AddContextWithSwagger();
         }

@@ -1,4 +1,5 @@
-﻿using RepositoryCore.Enums.Enum;
+﻿using Newtonsoft.Json;
+using RepositoryCore.Enums.Enum;
 using RepositoryCore.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -81,13 +82,53 @@ namespace AuthService.Models
         /// </summary>
         [Column("actions")]
         public string Actions { get; set; }
+        [Column("table_status")]
+        public TableStatus TableStatus { get; set; }
         [Column("changes")]
         public string Changes { get; set; }
         [NotMapped]
-        public List<RoleAction> ActionsList { get; set; }
+        public List<RoleAction> RoleChanges { get {
+                try
+                {
+                    if (!string.IsNullOrEmpty(Changes))
+                    {
+                        return JsonConvert.DeserializeObject<List<RoleAction>>(Changes);
+                    }
+                    return new List<RoleAction>();
+                }
+                catch (Exception ext)
+                {
+                    return new List<RoleAction>();
+                }
+            } }
+        [NotMapped]
+        public List<RoleAction> ActionsList { get {
+                try
+                {
+                    if (!string.IsNullOrEmpty(Changes))
+                    {
+                        return JsonConvert.DeserializeObject<List<RoleAction>>(Changes);
+                    }
+                    return new List<RoleAction>();
+                }
+                catch(Exception ext)
+                {
+                    return new List<RoleAction>();
+                }
+                
+            } }
+        public void AddChanges(int userId, string someText="")
+        {
+            var list = RoleChanges;
+            RoleAction newAction = new RoleAction() { UserId= userId, Text = someText, DateTime = DateTime.Now };
+            list.Add(newAction);
+            Changes = JsonConvert.SerializeObject(list);
+       }
     }
     public class RoleAction
     {
+        public int UserId{ get; set; }
+        public DateTime DateTime { get; set; }
         public string Text { get; set; }
     }
 
