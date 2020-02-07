@@ -1,25 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Security.Claims;
 
 namespace AuthService.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class CustomAuthorizeAttribute : TypeFilterAttribute
+   
+    public class ClaimRequirementAttribute : TypeFilterAttribute
     {
-        public CustomAuthorizeAttribute(
-            string Roles = "",
-            string MethodName = "",
-            string UserName = "",
-            int Position = 0)
-            : base(typeof(AuthorizeActionFilter))
+        public ClaimRequirementAttribute(string claimType, string claimValue) : base(typeof(ClaimRequirementFilter))
         {
-            Arguments = new object[] { Roles, MethodName, UserName, Position };
-
+            Arguments = new object[] { new Claim(claimType, claimValue) };
         }
-    }
-    public class TokenAttribute : Attribute
-    {
-        public string Name { get; set; }
+        public ClaimRequirementAttribute(int Position) : base(typeof(ClaimRequirementFilter))
+        {
+        }
+        public ClaimRequirementAttribute(string controllerName, string actionName, params string[] roles) : base(typeof(ClaimsRequirementFilter))
+        {
+            Arguments = new object[] { new Claim(controllerName, actionName) };
+        }
     }
 
 }

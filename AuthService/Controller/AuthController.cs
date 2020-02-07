@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace AuthService.Controller
 {
+    
     public abstract class AuthController<TUser, TUserRole> : ControllerBase
          where TUser : IdentityUser
          where TUserRole : IdentityUserRole

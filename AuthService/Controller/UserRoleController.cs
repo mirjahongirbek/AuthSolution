@@ -19,15 +19,13 @@ namespace AuthService.Controller
           where TRole : IdentityRole
         where TDeleteData:DeleteData
     {
-       /* IAuthRepository<TUser, TUserRole> _user;
-        IRoleRepository<TRole> _roles;*/
+      
         IUserRoleRepository<TUser, TRole, TUserRole, TDeleteData> _userRole;
         public UserRoleController(IUserRoleRepository<TUser, TRole, TUserRole, TDeleteData> userRole
             
             )
         {
-          /*  _user = user;
-            _roles = roles;*/
+         
             _userRole = userRole;
             
         }
@@ -55,6 +53,7 @@ namespace AuthService.Controller
                 return ext;
             }
         }
+        /*public async Task<NetResult>*/
         [HttpPost]
         public async Task<object> DeleteUserRole([FromBody]AddUserRoleModel model)
         {
@@ -68,7 +67,6 @@ namespace AuthService.Controller
                 result.Success = false;    
             }
             return result;
-
         }
 
         

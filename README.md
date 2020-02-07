@@ -3,11 +3,7 @@
 
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
-### Installation
-
-Dillinger requires [Node.js](https://nodejs.org/) v4+ to run.
-
-Create first Models if you wont to add some new propertys in entitys
+## Create first Models if you wont to add some new propertys in entitys
 
 ```sh
     public class User: IdentityUser

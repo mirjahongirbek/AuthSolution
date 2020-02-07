@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AuthService.Attributes
 {
-    public class AuthorizeActionFilter : IAsyncActionFilter
+ /*   public class AuthorizeActionFilter : IAsyncActionFilter
     {
         private string _methodName;
         private string _userName;
@@ -30,37 +30,35 @@ namespace AuthService.Attributes
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-           var claims= context.HttpContext.User.Claims;
-            
+            var claims = context.HttpContext.User.Claims;
+
             if (_roles.Count() > 0)
             {
-                foreach(var i in _roles)
+                foreach (var i in _roles)
                 {
-                    if(claims.FirstOrDefault(m => m.Value.ToLower() == i.ToLower())!= null){
+                    if (claims.FirstOrDefault(m => m.Value.ToLower() == i.ToLower()) != null)
+                    {
                         break;
                     }
-                }                
+                }
             }
             if (!string.IsNullOrEmpty(_methodName))
             {
-               if( claims.FirstOrDefault(m => m.Type.ToLower() == "methodName" && m.Value.ToLower() == _methodName.ToLower())== null)
+                if (claims.FirstOrDefault(m => m.Type.ToLower() == "methodName" && m.Value.ToLower() == _methodName.ToLower()) == null)
                 {
-
                 }
             }
             if (_position != 0)
             {
-                if(claims.FirstOrDefault(m=>m.Type.ToLower()=="position" && m.Value.ToLower()== _position.ToString())== null)
+                if (claims.FirstOrDefault(m => m.Type.ToLower() == "position" && m.Value.ToLower() == _position.ToString()) == null)
                 {
-
                 }
             }
             if (!string.IsNullOrEmpty(_userName))
             {
-                
             }
 
         }
-    }
+    }*/
 
 }

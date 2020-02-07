@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TestProject.Controllers
 {
-    [Route("api/[controller]")]
+   /* [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
@@ -38,5 +38,5 @@ namespace TestProject.Controllers
         public void Delete(int id)
         {
         }
-    }
+    }*/
 }

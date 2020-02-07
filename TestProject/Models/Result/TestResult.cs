@@ -1,0 +1,6 @@
+﻿
+
+namespace TestProject.Models.Result
+{
+
+}

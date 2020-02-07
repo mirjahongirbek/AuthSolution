@@ -34,6 +34,7 @@ namespace TestProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            CoreState.AddContextWithSwagger(services, "http://172.17.9.105:1600/api", "authTest", "test", "test");
             services.AddScoped<IDbContext, AuthDataContext>();
             services.AddScoped<IAuthRepository<User, UserRole>, IdentityUserService<User, Role, UserRole>>();
             services.AddAuthSolutionService("mysupersecret_secretkey!123");
@@ -41,7 +42,7 @@ namespace TestProject
             services.AddScoped<IDeleteDataService<DeleteData>, DeleteDataService<DeleteData>>();
             services.AddScoped<IUserRoleRepository<User, Role, UserRole,DeleteData>, UserRoleRepositoryService<User, Role, UserRole, DeleteData>>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-           services.AddContextWithSwagger();
+         //  services.AddContextWithSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
