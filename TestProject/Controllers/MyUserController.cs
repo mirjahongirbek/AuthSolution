@@ -1,4 +1,5 @@
-﻿using CoreResults;
+﻿using AuthService.Attributes;
+using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryCore.Exceptions;
 using System;
@@ -8,6 +9,7 @@ namespace TestProject.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Auth(true)]
     public class MyUserController : ControllerBase
     {
         public MyUserController()
@@ -15,6 +17,7 @@ namespace TestProject.Controllers
 
 
         }
+       
         [HttpGet]
         public NetResult<User> MyUser()
         {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using AuthService;
+﻿using AuthService;
 using AuthService.Interfaces.Service;
 using AuthService.Models;
 using AuthService.Services;
@@ -15,8 +11,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using TestProject.Models.Db;
 using TestProject.Models.User;
 
@@ -59,6 +56,7 @@ namespace TestProject
           
         }
     }
+   
 }
 /* public void SwaggerService(IServiceCollection services)
         {

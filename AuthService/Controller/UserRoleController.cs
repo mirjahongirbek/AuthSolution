@@ -41,11 +41,11 @@ namespace AuthService.Controller
             catch (Exception ext) { return ext; }
         }
         [HttpGet]
-        public async Task<NetResult<List<RoleResult<TRole>>>> GetUserRoles(int UserId)
+        public async Task<NetResult<List<RoleResult<TRole>>>> GetUserRoles()
         {
             try
             {
-                var roles = _userRole.GetUserRoles(UserId).Select(m => new RoleResult<TRole>(m)).ToList();
+                var roles = _userRole.GetUserRoles(this.UserId()).Select(m => new RoleResult<TRole>(m)).ToList();
                 return roles;
             }
             catch (Exception ext)
@@ -53,7 +53,7 @@ namespace AuthService.Controller
                 return ext;
             }
         }
-        /*public async Task<NetResult>*/
+      
         [HttpPost]
         public async Task<object> DeleteUserRole([FromBody]AddUserRoleModel model)
         {
