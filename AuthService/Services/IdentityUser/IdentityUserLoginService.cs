@@ -56,7 +56,7 @@ namespace AuthService.Services
             if (user == null) { return null; }
             var roles = GetRoles(user);
             SetToken(Claims(user), user);
-                 Update(user).Wait();
+            Update(user).Wait();
             LoginResult loginResult = new LoginResult()
             {
                 AccessToken = user.Token,
@@ -133,7 +133,7 @@ namespace AuthService.Services
             var user = _dbSet.Where(m => (m.UserName == model.UserName || m.Email == model.UserName) && m.Password == RepositoryState.GetHashString(model.Password)).FirstOrDefault();
             if (user == null)
             {
-                throw new CoreException("User Name or Password not Found",7);
+                throw new CoreException("User Name or Password not Found", 7);
 
             }
 
@@ -157,12 +157,16 @@ namespace AuthService.Services
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("Id", user.Id.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-            claims.Add(new Claim("Position", user.Position.ToString()));
-            claims.Add(new Claim("Email", user.Email ?? ""));
+            claims.Add(new Claim("position", user.Position.ToString()));
+            claims.Add(new Claim("email", user.Email ?? ""));
             var roles = GetRoles(user);
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, role.Name));
+                foreach (var i in role.ActionsList)
+                {
+                    claims.Add(new Claim("actions", i.ActionName));
+                }
             }
             foreach (var i in usr.GetProperties())
             {

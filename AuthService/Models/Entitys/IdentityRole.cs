@@ -102,18 +102,18 @@ namespace AuthService.Models
                 }
             } }
         [NotMapped]
-        public List<RoleAction> ActionsList { get {
+        public List<RoleActions> ActionsList { get {
                 try
                 {
-                    if (!string.IsNullOrEmpty(Changes))
+                    if (!string.IsNullOrEmpty(Actions))
                     {
-                        return JsonConvert.DeserializeObject<List<RoleAction>>(Changes);
+                        return JsonConvert.DeserializeObject<List<RoleActions>>(Actions);
                     }
-                    return new List<RoleAction>();
+                    return new List<RoleActions>();
                 }
                 catch(Exception ext)
                 {
-                    return new List<RoleAction>();
+                    return new List<RoleActions>();
                 }
                 
             } }
@@ -130,6 +130,11 @@ namespace AuthService.Models
         public int UserId{ get; set; }
         public DateTime DateTime { get; set; }
         public string Text { get; set; }
+    }
+    public class RoleActions
+    {
+        public string ActionName { get; set; }
+   
     }
 
 

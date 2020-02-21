@@ -1,6 +1,7 @@
 # AuthSolution
 
-
+Postman Exeption
+https://drive.google.com/open?id=1Jvox38XLTPIKUISkphPrILtm9G2R0alz
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 ## Create first Models if you wont to add some new propertys in entitys
@@ -20,7 +21,7 @@
 Connection to Db
 
 ```sh
- public class AuthDataContext :DbContext, EntityRepository.Context.IDbContext 
+ public class AuthDataContext :DbContext, EntityRepository.Context.IDbContext
     {
         public DbSet<UserRole> UserRoles { get; set; } //add DbSet to entitys
         public DbSet<TestProject.Models.User.User> Users { get; set; }
@@ -33,7 +34,7 @@ Connection to Db
         }
     }
 ```
-Add Configuration Service 
+Add Configuration Service
 ```sh
    public void ConfigureServices(IServiceCollection services)
         {
@@ -56,7 +57,7 @@ Add Configuration Service
     }
 ```
   ### Create AuthController
-  first Create some controller in project 
+  first Create some controller in project
   ```sh
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -65,7 +66,7 @@ Add Configuration Service
         IAuthRepository<User, UserRole> _user;
         public AuthController(IAuthRepository<User, UserRole> user) : base(user)
         {
-            _user = user; 
+            _user = user;
         }
         protected override void SendSms(string phoneNumber, string otpCode)
         {
@@ -86,7 +87,7 @@ Add Configuration Service
         }
     }
 ```
-### Create UserRoleManager controller for controling 
+### Create UserRoleManager controller for controling
 ```sh
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -102,6 +103,6 @@ Add Configuration Service
 ### Todos
 
  - Write MORE functionals
- 
+
 License
 ----

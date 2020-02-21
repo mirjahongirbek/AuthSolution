@@ -17,7 +17,7 @@ namespace AuthService.ModelView.Roles
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<RoleAction> Actions { get; set; }
+        public List<RoleActions> Actions { get; set; }
        
     }
 }

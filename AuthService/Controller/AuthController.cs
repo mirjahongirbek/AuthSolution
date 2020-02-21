@@ -29,7 +29,6 @@ namespace AuthService.Controller
             {
                 var loginResult = _user.LoginByRefresh(refreshToken);
                 return loginResult;
-
             }
             catch (Exception ext)
             {
@@ -47,7 +46,6 @@ namespace AuthService.Controller
                 {
                     return result.Item1;
                 }
-
                 if (result.Item2 != null || result.Item2.ShouldSendOtp)
                 {
                     var otp = RepositoryState.RandomInt();
@@ -69,8 +67,6 @@ namespace AuthService.Controller
             {
                 RegisterResult result = await _user.RegisterAsync(model);
                 return result;
-
-
             }
             catch (Exception ext)
             {
