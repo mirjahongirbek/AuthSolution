@@ -1,26 +1,19 @@
-﻿using AuthService.Attributes;
-using AuthService.Enum;
-using AuthService.Interfaces.Service;
+﻿using AuthService.Interfaces.Service;
 using AuthService.Models;
 using AuthService.ModelView;
 using EntityRepository.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using RepositoryCore.CoreState;
 using RepositoryCore.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using LoginResult = AuthService.ModelView.LoginResult;
 
 namespace AuthService.Services
 {
-      
+
     public partial class IdentityUserService<TUser, TRole, TUserRole>
         : IAuthRepository<TUser, TUserRole>
        where TUser : IdentityUser

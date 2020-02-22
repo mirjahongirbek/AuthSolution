@@ -12,7 +12,7 @@ namespace AuthService.Models
     /// Represents a role in the identity system
     /// </summary>
     /// <typeparam name="TKey">The type used for the primary key for the role.</typeparam>
-    public class IdentityRole:IEntity<int>
+    public class IdentityRole : IEntity<int>
     {
         /// <summary>
         /// Initializes a new instance of <see cref="IdentityRole{TKey}"/>.
@@ -87,7 +87,10 @@ namespace AuthService.Models
         [Column("changes")]
         public string Changes { get; set; }
         [NotMapped]
-        public List<RoleAction> RoleChanges { get {
+        public List<RoleAction> RoleChanges
+        {
+            get
+            {
                 try
                 {
                     if (!string.IsNullOrEmpty(Changes))
@@ -100,9 +103,13 @@ namespace AuthService.Models
                 {
                     return new List<RoleAction>();
                 }
-            } }
+            }
+        }
         [NotMapped]
-        public List<RoleActions> ActionsList { get {
+        public List<RoleActions> ActionsList
+        {
+            get
+            {
                 try
                 {
                     if (!string.IsNullOrEmpty(Actions))
@@ -111,30 +118,31 @@ namespace AuthService.Models
                     }
                     return new List<RoleActions>();
                 }
-                catch(Exception ext)
+                catch (Exception ext)
                 {
                     return new List<RoleActions>();
                 }
-                
-            } }
-        public void AddChanges(int userId, string someText="")
+
+            }
+        }
+        public void AddChanges(int userId, string someText = "")
         {
             var list = RoleChanges;
-            RoleAction newAction = new RoleAction() { UserId= userId, Text = someText, DateTime = DateTime.Now };
+            RoleAction newAction = new RoleAction() { UserId = userId, Text = someText, DateTime = DateTime.Now };
             list.Add(newAction);
             Changes = JsonConvert.SerializeObject(list);
-       }
+        }
     }
     public class RoleAction
     {
-        public int UserId{ get; set; }
+        public int UserId { get; set; }
         public DateTime DateTime { get; set; }
         public string Text { get; set; }
     }
     public class RoleActions
     {
         public string ActionName { get; set; }
-   
+
     }
 
 

@@ -22,7 +22,7 @@ namespace AuthService.Controller
             _roles = role;
         }
         [HttpPost]
-        [Auth(ClaimTypes.Name, "CanReadResource")]
+        //[Auth(ClaimTypes.Name, "CanReadResource")]
         public virtual async Task<NetResult<SuccessResult>> AddRole([FromBody] TRole model)
         {
             try
@@ -39,7 +39,7 @@ namespace AuthService.Controller
             
         }
         [HttpGet]
-        [Auth(ClaimTypes.Name, "CanReadResource")]
+        [Auth(ClaimTypes.Role, "CanReadResource")]
         public virtual NetResult<List<RoleResult<TRole>>> GetActiveRoles()
         {
             var result = _roles.Find(m=>m.TableStatus== RepositoryCore.Enums.Enum.TableStatus.Active).Select(m => new RoleResult<TRole>(m)).ToList();
@@ -54,7 +54,7 @@ namespace AuthService.Controller
             return result;
         }
         [HttpDelete]
-        [Auth("RoleManager","actionName","sdsd","sdcsd")]
+        //[Auth("RoleManager","actionName","sdsd","sdcsd")]
         public virtual async Task<NetResult<SuccessResult>> DeleteRole(int id)
         { SuccessResult result = new SuccessResult();
             try

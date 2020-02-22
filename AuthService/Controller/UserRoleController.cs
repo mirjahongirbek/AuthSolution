@@ -1,9 +1,11 @@
-﻿using AuthService.Interfaces.Service;
+﻿using AuthService.Attributes;
+using AuthService.Interfaces.Service;
 using AuthService.Models;
 using AuthService.ModelView;
 using AuthService.ModelView.Roles;
 using AuthService.ModelView.UserRole;
 using CoreResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

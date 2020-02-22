@@ -179,7 +179,7 @@ namespace AuthService.Services
                 if (claims.FirstOrDefault(m => m.Type == name) == null)
                 {
                     if (i.GetValue(user) != null)
-                        claims.Add(new Claim(name, i.GetValue(user).ToString()));
+                        claims.Add(new Claim(name.ToLower(), i.GetValue(user).ToString().ToLower()));
                 }
 
 

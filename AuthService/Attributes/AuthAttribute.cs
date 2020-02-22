@@ -10,20 +10,25 @@ namespace AuthService.Attributes
 
     public class AuthAttribute : TypeFilterAttribute
     {
-        public AuthAttribute(string claimType, string claimValue) : base(typeof(CoreClaimFilter))
+        public AuthAttribute(string claimsName, string roles) : base(typeof(CoreClaimFilter))
         {
-            Arguments = new object[] { new Claim(claimType, claimValue) };
+            Arguments = new object[] { new Claim(claimsName,roles)};
         }
-        public AuthAttribute(int Position) : base(typeof(CoreClaimFilter))
+     
+        public AuthAttribute(int Position) : base(typeof(PositonClaimFilter))
         {
+            Arguments = new object[] { new Claim(Position.ToString(), "item") };
         }
-        public AuthAttribute(string controllerName, string actionName, params string[] roles) : base(typeof(CoreClaimsFilter))
-        {
-            Arguments = new object[] { new Claim(controllerName, actionName) };
-        }
+        
         public AuthAttribute(bool byAction = false, [CallerMemberName] string action = "", [CallerFilePath] string path = "") : base(typeof(ActionFilter))
         {
-            if(string.IsNullOrEmpty(action))
+            if (string.IsNullOrEmpty(action))
+            {
+                if (AuthOptions.CheckDefaulAction)
+                {
+                    throw new Exception("In path " + path + "not set in Controller plaese set Action");
+                }
+            }
             path = path.Split('\\').Last();
             path = path.Split("Controller")[0];
             Arguments = new object[] { new Claim(byAction.ToString(), action, path) };

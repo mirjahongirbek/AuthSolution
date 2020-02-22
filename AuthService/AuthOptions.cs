@@ -87,10 +87,28 @@ namespace AuthService
             NetResult<ResponseData> result = new NetResult<ResponseData>()
             {
                 HttpStatus = 401,
-                Error = new RepositoryCore.Result.ErrorResult() { Code = 401, Message = "Unuthorize Joha" }
+                Error = new RepositoryCore.Result.ErrorResult() { Code = 401, Message = "Unuthorize" }
             };
             context.HttpContext.Response.StatusCode = 401;
             context.Result = new CoreJsonResult(result);
+        }
+        public static T GetToken<T>(this ControllerBase cBase, string key)
+        {
+           var value= cBase.User.FindFirst(key.ToLower())?.Value;
+            
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new CoreException("Claims not found ",3);                
+            }
+            if(typeof(T)==  typeof(string))
+            {
+                return (T)(object)value;
+            }
+            if(typeof(int)== typeof(T))
+            {
+              return (T)(object)int.Parse(value);
+            }
+            return (T)(object)value;
         }
     }
 

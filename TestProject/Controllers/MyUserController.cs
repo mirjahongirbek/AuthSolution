@@ -1,10 +1,11 @@
 ﻿using AuthService.Attributes;
+using AuthService.ModelView;
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryCore.Exceptions;
 using System;
 using System.Linq;
-using TestProject.Models.User;
+using System.Security.Claims;
 
 namespace TestProject.Controllers
 {
@@ -20,16 +21,80 @@ namespace TestProject.Controllers
         }
        [Auth(true)]
         [HttpGet]
-        public NetResult<User> MyUser()
+        public NetResult<SuccessResult> ByAction()
         {
             try
             {
-               var item= User.FindAll("joha").ToList();
-               var ss= item.Any(m => m.Value == "joha1");
-               var lses= User.FindFirst("joha");
-                throw new CoreException(5);
+
+                return new SuccessResult() { Success = true };
 
             }catch(Exception ext)
+            {
+                return ext;
+            }
+        }
+        [Auth(true)]
+        public NetResult<SuccessResult> OtherAction()
+        {
+            try
+            {
+
+                return new SuccessResult() { Success = true };
+
+            }
+            catch (Exception ext)
+            {
+                return ext;
+            }
+        }
+        [HttpGet]
+        [Auth(5)]
+        public NetResult<SuccessResult> ByPositon()
+        {
+            try
+            {
+                return new SuccessResult() { Success = true };
+
+            }
+            catch (Exception ext)
+            {
+                return ext;
+            }
+        }
+        [HttpGet]
+        [Auth(10)]
+        public NetResult<SuccessResult> OtherPosition()
+        {
+            try
+            {
+                return new SuccessResult() { Success = true };
+
+            }
+            catch (Exception ext)
+            {
+                return ext;
+            }
+        }
+        [Auth(ClaimTypes.Role,"admin")]
+        public NetResult<SuccessResult> ByRoleName()
+        {
+            try
+            {
+                return new SuccessResult() { Success = true };
+            }
+            catch (Exception ext)
+            {
+                return ext;
+            }
+        }
+        [Auth(ClaimTypes.Role, "OtherRole")]
+        public NetResult<SuccessResult> OtherRole()
+        {
+            try
+            {
+                return new SuccessResult() { Success = true };
+            }
+            catch (Exception ext)
             {
                 return ext;
             }
