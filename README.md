@@ -4,7 +4,39 @@ Postman Exeption
 https://drive.google.com/open?id=1Jvox38XLTPIKUISkphPrILtm9G2R0alz
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+
 ## Create first Models if you wont to add some new propertys in entitys
+
+# Auth Attributes
+
+Check by Roles
+
+```sh
+ [Auth(ClaimTypes.Role, "admin")]
+ or
+ [Auth(ClaimTypes.Role, "admin,nextRoles")]
+```
+
+##### By Position
+
+Checking by Position
+If User position upper then 10 or equal 10
+
+```sh
+ [Auth(10)]
+```
+
+##### Checking By Action Name
+
+```sh
+    [Auth(true)]
+```
+
+#### Or just chekking User authorize
+
+```sh
+[Auth]
+```
 
 ```sh
     public class User: IdentityUser
@@ -34,7 +66,9 @@ Connection to Db
         }
     }
 ```
+
 Add Configuration Service
+
 ```sh
    public void ConfigureServices(IServiceCollection services)
         {
@@ -47,7 +81,9 @@ Add Configuration Service
            services.AddContextWithSwagger(); //this is Service in Core Result
         }
 ```
+
 # Add in Middelware!
+
 ```sh
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
@@ -56,25 +92,30 @@ Add Configuration Service
             app.UseMvc();
     }
 ```
-  ### Create AuthController
-  first Create some controller in project
-  ```sh
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class AuthController : AuthController<User, UserRole>
-    {
-        IAuthRepository<User, UserRole> _user;
-        public AuthController(IAuthRepository<User, UserRole> user) : base(user)
-        {
-            _user = user;
-        }
-        protected override void SendSms(string phoneNumber, string otpCode)
-        {
-            Console.WriteLine("Phone number :" + phoneNumber + "   Otp Code: " + otpCode);
-        }
-    }
+
+### Create AuthController
+
+first Create some controller in project
+
+```sh
+  [Route("api/[controller]/[action]")]
+  [ApiController]
+  public class AuthController : AuthController<User, UserRole>
+  {
+      IAuthRepository<User, UserRole> _user;
+      public AuthController(IAuthRepository<User, UserRole> user) : base(user)
+      {
+          _user = user;
+      }
+      protected override void SendSms(string phoneNumber, string otpCode)
+      {
+          Console.WriteLine("Phone number :" + phoneNumber + "   Otp Code: " + otpCode);
+      }
+  }
 ```
+
 ### Create Role Controller for control in roles
+
 ```sh
   [Route("api/[controller]/[action]")]
     [ApiController]
@@ -87,7 +128,9 @@ Add Configuration Service
         }
     }
 ```
+
 ### Create UserRoleManager controller for controling
+
 ```sh
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -100,9 +143,9 @@ Add Configuration Service
         }
     }
 ```
+
 ### Todos
 
- - Write MORE functionals
+- Write MORE functionals
 
-License
-----
+## License
