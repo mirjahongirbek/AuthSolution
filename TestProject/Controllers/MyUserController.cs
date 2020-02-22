@@ -11,7 +11,7 @@ namespace TestProject.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    
+
     public class MyUserController : ControllerBase
     {
         public MyUserController()
@@ -19,7 +19,26 @@ namespace TestProject.Controllers
 
 
         }
-       [Auth(true)]
+        /// <summary>
+        /// <description>
+        /// Check User by Action Name    Example "ByAction"
+        /// </description>
+        /// <result>
+        /// {
+        ///    "statusCode": 0,
+        ///    "result": {
+        ///        "success": false,
+        ///        "id": 0
+        ///    },
+        ///    "id": null,
+        ///    "success": true,
+        ///    "httpStatus": 200,
+        ///    "error": null
+        ///  } 
+        /// </result>
+        /// </summary>
+        /// <returns></returns>
+        [Auth(true)]
         [HttpGet]
         public NetResult<SuccessResult> ByAction()
         {
@@ -28,11 +47,29 @@ namespace TestProject.Controllers
 
                 return new SuccessResult() { Success = true };
 
-            }catch(Exception ext)
+            }
+            catch (Exception ext)
             {
                 return ext;
             }
         }
+        /// <summary>
+        /// <response>
+        /// response status: 401
+        /// {
+        ///    "statusCode": 0,
+        ///    "result": null,
+        ///    "id": null,
+        ///    "success": true,
+        ///    "httpStatus": 401,
+        ///    "error": {
+        ///        "code": 401,
+        ///        "message": "Unuthorize Joha"
+        ///    }
+        //}
+        /// </response>
+        /// </summary>
+        /// <returns></returns>
         [Auth(true)]
         public NetResult<SuccessResult> OtherAction()
         {
@@ -47,6 +84,22 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
+        /// <summary>
+        /// <response>
+        /// {
+        ///    "statusCode": 0,
+        ///    "result": {
+        ///        "success": true,
+        ///        "id": 0
+        ///    },
+        ///    "id": null,
+        ///    "success": true,
+        ///    "httpStatus": 200,
+        ///    "error": null
+        ///}
+        /// </response>
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Auth(5)]
         public NetResult<SuccessResult> ByPositon()
@@ -61,6 +114,24 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
+
+        /// <summary>
+        /// <response>
+        /// response status: 401
+        /// {
+        ///    "statusCode": 0,
+        ///    "result": null,
+        ///    "id": null,
+        ///    "success": true,
+        ///    "httpStatus": 401,
+        ///    "error": {
+        ///        "code": 401,
+        ///        "message": "Unuthorize Joha"
+        ///    }
+        ///}
+        /// </response>
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Auth(10)]
         public NetResult<SuccessResult> OtherPosition()
@@ -75,7 +146,23 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
-        [Auth(ClaimTypes.Role,"admin")]
+        /// <summary>
+        /// <response>
+        /// {
+        ///    "statusCode": 0,
+        ///    "result": {
+        ///        "success": true,
+        ///        "id": 0
+        ///    },
+        ///    "id": null,
+        ///    "success": true,
+        ///    "httpStatus": 200,
+        ///    "error": null
+        ///}
+        ///</response>
+        /// </summary>
+        /// <returns></returns>
+        [Auth(ClaimTypes.Role, "admin")]
         public NetResult<SuccessResult> ByRoleName()
         {
             try
@@ -87,6 +174,23 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
+        /// <summary>
+        /// <response>
+        /// response status: 401
+        /// {
+        ///    "statusCode": 0,
+        ///    "result": null,
+        ///    "id": null,
+        ///    "success": true,
+        ///    "httpStatus": 401,
+        ///    "error": {
+        ///        "code": 401,
+        ///        "message": "Unuthorize Joha"
+        ///    }
+        ///}
+        /// </response>
+        /// </summary>
+        /// <returns></returns>
         [Auth(ClaimTypes.Role, "OtherRole")]
         public NetResult<SuccessResult> OtherRole()
         {
@@ -101,5 +205,5 @@ namespace TestProject.Controllers
         }
 
     }
-    
+
 }

@@ -4,5 +4,45 @@
         <name>TestProject</name>
     </assembly>
     <members>
+        <member name="M:TestProject.Controllers.MyUserController.ByAction">
+            <summary>
+            <description>
+            Check User by Action Name    Example "ByAction"
+            </description>
+            <result>
+            {
+               "statusCode": 0,
+               "result": {
+                   "success": false,
+                   "id": 0
+               },
+               "id": null,
+               "success": true,
+               "httpStatus": 200,
+               "error": null
+             } 
+            </result>
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TestProject.Controllers.MyUserController.OtherAction" -->
+        <member name="M:TestProject.Controllers.MyUserController.ByPositon">
+             <summary>
+             <response>
+             {
+                "statusCode": 0,
+                "result": null,
+                "id": null,
+                "success": true,
+                "httpStatus": 401,
+                "error": {
+                    "code": 401,
+                    "message": "Unuthorize"
+                }
+            }
+             </response>
+             </summary>
+             <returns></returns>
+        </member>
     </members>
 </doc>
