@@ -8,13 +8,13 @@
     ".NETCoreApp,Version=v2.2": {
       "AuthService/1.0.0": {
         "dependencies": {
-          "CoreResult": "0.0.2",
-          "EntityRepository": "2.0.1",
+          "CoreEntityRepository": "2.0.3",
+          "CoreResult": "0.0.3",
           "Microsoft.AspNetCore.Authentication": "2.2.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.2.0",
           "Microsoft.AspNetCore.Mvc.Abstractions": "2.2.0",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
-          "RepositoryCore": "2.0.0.3",
+          "RepositoryCore": "2.0.0.4",
           "System.IdentityModel.Tokens.Jwt": "5.6.0"
         },
         "runtime": {
@@ -1587,27 +1587,36 @@
           "System.Xml.XPath": "4.0.1"
         }
       },
-      "CoreClient/0.0.2": {
+      "CoreClient/0.0.3": {
         "dependencies": {
           "LiteDB": "4.1.4",
-          "LiteRepository": "0.0.2",
+          "LiteRepository": "0.0.3",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0",
           "Newtonsoft.Json": "12.0.2",
-          "RepositoryCore": "2.0.0.3",
+          "RepositoryCore": "2.0.0.4",
           "RestSharp": "106.6.10"
         },
         "runtime": {
           "CoreClient.dll": {}
         }
       },
-      "CoreResult/0.0.2": {
+      "CoreEntityRepository/2.0.3": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "2.2.6",
+          "RepositoryCore": "2.0.0.4"
+        },
+        "runtime": {
+          "EntityRepository.dll": {}
+        }
+      },
+      "CoreResult/0.0.3": {
         "dependencies": {
           "AspNetCore.Mvc.Routes.DebuggingLoggerMiddleware": "1.0.0",
-          "CoreClient": "0.0.2",
+          "CoreClient": "0.0.3",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "NSwag.AspNetCore": "13.2.2",
           "Newtonsoft.Json": "12.0.2",
-          "RepositoryCore": "2.0.0.3",
+          "RepositoryCore": "2.0.0.4",
           "Swashbuckle.AspNetCore": "4.0.1",
           "Swashbuckle.AspNetCore.Annotations": "4.0.1",
           "Swashbuckle.AspNetCore.Filters": "4.5.5",
@@ -1620,25 +1629,16 @@
           "CoreResult.dll": {}
         }
       },
-      "EntityRepository/2.0.1": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.6",
-          "RepositoryCore": "2.0.0.3"
-        },
-        "runtime": {
-          "EntityRepository.dll": {}
-        }
-      },
-      "LiteRepository/0.0.2": {
+      "LiteRepository/0.0.3": {
         "dependencies": {
           "LiteDB": "4.1.4",
-          "RepositoryCore": "2.0.0.3"
+          "RepositoryCore": "2.0.0.4"
         },
         "runtime": {
           "LiteRepository.dll": {}
         }
       },
-      "RepositoryCore/2.0.0.3": {
+      "RepositoryCore/2.0.0.4": {
         "runtime": {
           "RepositoryCore.dll": {}
         }
@@ -2771,27 +2771,27 @@
       "path": "system.xml.xpath.xdocument/4.0.1",
       "hashPath": "system.xml.xpath.xdocument.4.0.1.nupkg.sha512"
     },
-    "CoreClient/0.0.2": {
+    "CoreClient/0.0.3": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "CoreResult/0.0.2": {
+    "CoreEntityRepository/2.0.3": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "EntityRepository/2.0.1": {
+    "CoreResult/0.0.3": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "LiteRepository/0.0.2": {
+    "LiteRepository/0.0.3": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "RepositoryCore/2.0.0.3": {
+    "RepositoryCore/2.0.0.4": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

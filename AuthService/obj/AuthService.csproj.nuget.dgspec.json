@@ -5,10 +5,10 @@
   },
   "projects": {
     "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj": {
-      "version": "1.0.0",
+      "version": "0.0.1",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj",
-        "projectName": "AuthService",
+        "projectName": "AuthCoreService",
         "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj",
         "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
         "outputPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\obj\\",
@@ -95,7 +95,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj": {
-      "version": "0.0.2",
+      "version": "0.0.3",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj",
         "projectName": "CoreClient",
@@ -178,7 +178,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj": {
-      "version": "0.0.2",
+      "version": "0.0.3",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj",
         "projectName": "CoreResult",
@@ -289,10 +289,10 @@
       }
     },
     "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj": {
-      "version": "2.0.1",
+      "version": "2.0.3",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj",
-        "projectName": "EntityRepository",
+        "projectName": "CoreEntityRepository",
         "projectPath": "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj",
         "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
         "outputPath": "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\obj\\",
@@ -357,7 +357,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj": {
-      "version": "0.0.2",
+      "version": "0.0.3",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj",
         "projectName": "LiteRepository",
@@ -425,7 +425,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
-      "version": "2.0.0.3",
+      "version": "2.0.0.4",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj",
         "projectName": "RepositoryCore",

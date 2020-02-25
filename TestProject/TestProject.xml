@@ -31,13 +31,69 @@
              <response>
              {
                 "statusCode": 0,
+                "result": {
+                    "success": true,
+                    "id": 0
+                },
+                "id": null,
+                "success": true,
+                "httpStatus": 200,
+                "error": null
+            }
+             </response>
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:TestProject.Controllers.MyUserController.OtherPosition">
+             <summary>
+             <response>
+             response status: 401
+             {
+                "statusCode": 0,
                 "result": null,
                 "id": null,
                 "success": true,
                 "httpStatus": 401,
                 "error": {
                     "code": 401,
-                    "message": "Unuthorize"
+                    "message": "Unuthorize Joha"
+                }
+            }
+             </response>
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:TestProject.Controllers.MyUserController.ByRoleName">
+             <summary>
+             <response>
+             {
+                "statusCode": 0,
+                "result": {
+                    "success": true,
+                    "id": 0
+                },
+                "id": null,
+                "success": true,
+                "httpStatus": 200,
+                "error": null
+            }
+            </response>
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:TestProject.Controllers.MyUserController.OtherRole">
+             <summary>
+             <response>
+             response status: 401
+             {
+                "statusCode": 0,
+                "result": null,
+                "id": null,
+                "success": true,
+                "httpStatus": 401,
+                "error": {
+                    "code": 401,
+                    "message": "Unuthorize Joha"
                 }
             }
              </response>

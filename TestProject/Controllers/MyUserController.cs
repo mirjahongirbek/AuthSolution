@@ -3,6 +3,7 @@ using AuthService.ModelView;
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryCore.Exceptions;
+using RepositoryCore.Models;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -54,6 +55,7 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
+
         /// <summary>
         /// <response>
         /// response status: 401
@@ -67,7 +69,7 @@ namespace TestProject.Controllers
         ///        "code": 401,
         ///        "message": "Unuthorize Joha"
         ///    }
-        //}
+        ///}
         /// </response>
         /// </summary>
         /// <returns></returns>
@@ -85,6 +87,7 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
+
         /// <summary>
         /// <response>
         /// {
@@ -147,6 +150,7 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
+
         /// <summary>
         /// <response>
         /// {
@@ -204,6 +208,7 @@ namespace TestProject.Controllers
                 return ext;
             }
         }
+        
 
     }
 
