@@ -87,7 +87,7 @@ namespace AuthService
             NetResult<ResponseData> result = new NetResult<ResponseData>()
             {
                 HttpStatus = 401,
-                Error = new RepositoryCore.Result.ErrorResult() { Code = 401, Message = "Unuthorize" }
+                Error = new RepositoryCore.Result.DefaultResult() { Code = 401, Message = "Unuthorize" }
             };
             context.HttpContext.Response.StatusCode = 401;
             context.Result = new CoreJsonResult(result);
