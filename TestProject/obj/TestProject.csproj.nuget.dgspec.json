@@ -38,6 +38,9 @@
               "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj": {
                 "projectPath": "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj"
               },
+              "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\MongoRepositorys.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\MongoRepositorys.csproj"
+              },
               "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
                 "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
               }
@@ -212,7 +215,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj": {
-      "version": "0.0.3",
+      "version": "0.0.4",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\CoreResult\\CoreClient\\CoreClient.csproj",
         "projectName": "CoreClient",
@@ -295,7 +298,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj": {
-      "version": "0.0.3",
+      "version": "0.0.4",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj",
         "projectName": "CoreResult",
@@ -406,7 +409,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj": {
-      "version": "2.0.3",
+      "version": "2.0.4",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj",
         "projectName": "CoreEntityRepository",
@@ -474,7 +477,7 @@
       }
     },
     "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj": {
-      "version": "0.0.3",
+      "version": "0.0.4",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\EntityRepository\\LiteRepository\\LiteRepository.csproj",
         "projectName": "LiteRepository",
@@ -541,8 +544,76 @@
         }
       }
     },
+    "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\MongoRepositorys.csproj": {
+      "version": "0.0.1",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\MongoRepositorys.csproj",
+        "projectName": "MongoRepositorys",
+        "projectPath": "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\MongoRepositorys.csproj",
+        "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\murtozayev-j\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "\\\\172.17.9.248\\open\\nuget": {},
+          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.10.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
-      "version": "2.0.0.4",
+      "version": "2.0.0.5",
       "restore": {
         "projectUniqueName": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj",
         "projectName": "RepositoryCore",

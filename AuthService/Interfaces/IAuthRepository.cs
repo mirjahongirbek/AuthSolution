@@ -1,9 +1,5 @@
-﻿using AuthService.Enum;
-using AuthService.Models;
-using AuthService.Models.Models;
+﻿using AuthService.Models;
 using AuthService.ModelView;
-using CoreResults;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,16 +9,14 @@ using LoginResult = AuthService.ModelView.LoginResult;
 
 namespace AuthService.Interfaces.Service
 {
-    public interface IAuthRepository<TUser, TUserRole>
-       where TUser : IdentityUser
-        where TUserRole : IdentityUserRole
+    public interface IAuthRepository<TUser, TUserRole, TKey>
+       where TUser : IdentityUser<TKey>
+        where TUserRole : IdentityUserRole<TKey>
     {
         #region Get
         Task<TUser> GetByEmail(string model);
         Task<TUser> GetByUserName(string userName);
-        Task<TUser> GetMe(int id);
-        TUser Get(int id);
-        Task<TUser> GetMe(string id);
+        TUser Get(TKey id);
         TUser GetFirst(Expression<Func<TUser, bool>> expression);
         #endregion
         #region  Add
@@ -33,18 +27,21 @@ namespace AuthService.Interfaces.Service
         #region Role
         void AddUserRole(TUserRole userRole);
         #endregion
-        Task<bool> Delete(int id);
+        Task<bool> Delete(TKey id);
         LoginResult LoginByRefresh(string refreshToken);
         LoginResult Login(TUser user);
+     //   Task<ClaimsIdentity> LoginClaims(string username, string password);
+        Task<(LoginResult, TUser)> Login(LoginViewModal model);
+        Task<LoginResult> LoginResult(LoginViewModal model);
         Task<RegisterResult> RegisterAsync(RegisterUser model);
         Task Update(TUser user);
         IEnumerable<TUser> FindAll();
         IEnumerable<TUser> Find(Expression<Func<TUser, bool>> expression);
         long Count();
         long Count(Expression<Func<TUser, bool>> expression);
-        Task<ClaimsIdentity> LoginClaims(string username, string password);
+     
         Task<bool> Delete(TUser user);
-        Task<(LoginResult, TUser)> Login(LoginViewModal model);
+       
         /*   Task<(LoginResult, TUser)> Login(string username, string password);*/
         void SetRefresh(TUser user);
         string SetToken(List<Claim> claims, TUser user);

@@ -151,41 +151,41 @@ namespace AuthService.Services
             return (Login(user), user);
 
         }
-        public virtual List<Claim> Claims(TUser user)
-        {
-            var usr = user.GetType();
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim("Id", user.Id.ToString()));
-            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-            claims.Add(new Claim("position", user.Position.ToString()));
-            claims.Add(new Claim("email", user.Email ?? ""));
-            var roles = GetRoles(user);
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, role.Name));
-                foreach (var i in role.ActionsList)
-                {
-                    claims.Add(new Claim("actions", i.ActionName));
-                }
-            }
-            foreach (var i in usr.GetProperties())
-            {
-                var token = i.GetCustomAttribute<TokenAttribute>();
-                if (token == null)
-                    continue;
+        //public virtual List<Claim> Claims(TUser user)
+        //{
+        //    var usr = user.GetType();
+        //    List<Claim> claims = new List<Claim>();
+        //    claims.Add(new Claim("Id", user.Id.ToString()));
+        //    claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+        //    claims.Add(new Claim("position", user.Position.ToString()));
+        //    claims.Add(new Claim("email", user.Email ?? ""));
+        //    var roles = GetRoles(user);
+        //    foreach (var role in roles)
+        //    {
+        //        claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, role.Name));
+        //        foreach (var i in role.ActionsList)
+        //        {
+        //            claims.Add(new Claim("actions", i.ActionName));
+        //        }
+        //    }
+        //    foreach (var i in usr.GetProperties())
+        //    {
+        //        var token = i.GetCustomAttribute<TokenAttribute>();
+        //        if (token == null)
+        //            continue;
 
-                var name = string.IsNullOrEmpty(token.Name) ? i.Name : token.Name;
+        //        var name = string.IsNullOrEmpty(token.Name) ? i.Name : token.Name;
 
-                if (claims.FirstOrDefault(m => m.Type == name) == null)
-                {
-                    if (i.GetValue(user) != null)
-                        claims.Add(new Claim(name.ToLower(), i.GetValue(user).ToString().ToLower()));
-                }
+        //        if (claims.FirstOrDefault(m => m.Type == name) == null)
+        //        {
+        //            if (i.GetValue(user) != null)
+        //                claims.Add(new Claim(name.ToLower(), i.GetValue(user).ToString().ToLower()));
+        //        }
 
 
-            }
-            return claims;
-        }
+        //    }
+        //    return claims;
+        //}
 
     }
 }

@@ -7,26 +7,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AuthService.Models
 {
-    public class IdentityUserRole : IEntity<int>
+   
+    public  class IdentityUserRole<TKey> : IEntity<TKey>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public int Id { get; set; }
+      
+        public TKey Id { get; set; }
         /// <summary>
         /// Gets or sets the primary key of the user that is linked to a role.
         /// </summary>
-        [Column("user_id")]
-        public virtual int UserId { get; set; }
+      
+        public virtual TKey UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the primary key of the role that is linked to the user.
         /// </summary>
-        [Column("role_id")]
-        public virtual int RoleId { get; set; }
-        [Column("add_user_id")]
-        public virtual int AddUserId { get; set; }
-        [Column("changes")]
+      
+        public virtual TKey RoleId { get; set; }
+      
+        public virtual TKey AddUserId { get; set; }
+      
         public virtual string Changes { get; set; }
         [NotMapped]
         public List<UserRoleChange> UserRoleChange

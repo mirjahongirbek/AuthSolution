@@ -1,4 +1,6 @@
-﻿using CoreResults;
+﻿using AuthService.Attributes;
+using AuthService.Models;
+using CoreResults;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -8,7 +10,9 @@ using RepositoryCore.Exceptions;
 using RepositoryCore.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 
@@ -74,10 +78,10 @@ namespace AuthService
         }
         public static bool IsAuthorize(this AuthorizationFilterContext context)
         {
-           if(context.HttpContext.User.Claims.Count() == 0)
+            if (context.HttpContext.User.Claims.Count() == 0)
             {
                 context.SetUnthorize();
-              
+
                 return true;
             }
             return false;
@@ -94,22 +98,76 @@ namespace AuthService
         }
         public static T GetToken<T>(this ControllerBase cBase, string key)
         {
-           var value= cBase.User.FindFirst(key.ToLower())?.Value;
-            
+            var value = cBase.User.FindFirst(key.ToLower())?.Value;
+
             if (string.IsNullOrEmpty(value))
             {
-                throw new CoreException("Claims not found ",3);                
+                throw new CoreException("Claims not found ", 3);
             }
-            if(typeof(T)==  typeof(string))
+            if (typeof(T) == typeof(string))
             {
                 return (T)(object)value;
             }
-            if(typeof(int)== typeof(T))
+            if (typeof(int) == typeof(T))
             {
-              return (T)(object)int.Parse(value);
+                return (T)(object)int.Parse(value);
             }
             return (T)(object)value;
         }
+        public static List<Claim> GenerateClaims<TUser, TRole, TKey>(TUser user, List<TRole> roles)
+            where TUser : IdentityUser<TKey>
+            where TRole : IdentityRole<TKey>
+        {
+            var usr = user.GetType();
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim("Id", user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+            claims.Add(new Claim("position", user.Position.ToString()));
+            claims.Add(new Claim("email", user.Email ?? ""));
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, role.Name));
+                foreach (var i in role.ActionsList)
+                {
+                    claims.Add(new Claim("actions", i.ActionName));
+                }
+            }
+            foreach (var i in usr.GetProperties())
+            {
+                var token = i.GetCustomAttribute<TokenAttribute>();
+                if (token == null)
+                    continue;
+                var name = string.IsNullOrEmpty(token.Name) ? i.Name : token.Name;
+                if (claims.FirstOrDefault(m => m.Type == name) == null)
+                {
+                    if (i.GetValue(user) != null)
+                        claims.Add(new Claim(name.ToLower(), i.GetValue(user).ToString().ToLower()));
+                }
+            }
+            return claims;
+        }
+        public static string SetToken<TUser, TKey>(List<Claim> claims, TUser user = null)
+            where TUser : IdentityUser<TKey>
+        {
+            var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            var now = DateTime.Now;
+            var jwt = new JwtSecurityToken(
+                 AuthOptions.ISSUER,
+                 AuthOptions.AUDIENCE,
+                 notBefore: now,
+                 claims: claimsIdentity.Claims,
+                 expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                     SecurityAlgorithms.HmacSha256));
+            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            if (user != null)
+            {
+                user.Token = token;
+                user.LastLoginDate = DateTime.Now;
+            }
+            return token;
+        }
+
     }
 
 }
