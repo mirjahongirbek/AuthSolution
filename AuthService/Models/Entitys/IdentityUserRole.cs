@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AuthService.Enum;
+using Newtonsoft.Json;
 using RepositoryCore.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace AuthService.Models
         public virtual TKey AddUserId { get; set; }
       
         public virtual string Changes { get; set; }
+        public virtual UserStatus Status { get; set; }
         [NotMapped]
         public List<UserRoleChange> UserRoleChange
         {

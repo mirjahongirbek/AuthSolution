@@ -25,7 +25,25 @@
             </summary>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:TestProject.Controllers.MyUserController.OtherAction" -->
+        <member name="M:TestProject.Controllers.MyUserController.OtherAction">
+             <summary>
+             <response>
+             response status: 401
+             {
+                "statusCode": 0,
+                "result": null,
+                "id": null,
+                "success": true,
+                "httpStatus": 401,
+                "error": {
+                    "code": 401,
+                    "message": "Unuthorize Joha"
+                }
+            }
+             </response>
+             </summary>
+             <returns></returns>
+        </member>
         <member name="M:TestProject.Controllers.MyUserController.ByPositon">
              <summary>
              <response>

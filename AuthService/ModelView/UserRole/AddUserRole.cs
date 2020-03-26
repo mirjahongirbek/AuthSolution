@@ -1,9 +1,9 @@
 ﻿namespace AuthService.ModelView.UserRole
 {
-  public  class AddUserRoleModel
+  public  class AddUserRoleModel<TKey>
     {
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public TKey UserId { get; set; }
+        public TKey RoleId { get; set; }
 
     }
 }

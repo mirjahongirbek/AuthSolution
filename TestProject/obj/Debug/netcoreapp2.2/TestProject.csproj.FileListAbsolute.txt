@@ -28,3 +28,7 @@ C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\Test
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.csproj.CopyComplete
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.dll
 C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.pdb
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\MongoRepositorys.dll
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\MongoRepositorys.pdb
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\MongoAuthService.dll
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\MongoAuthService.pdb

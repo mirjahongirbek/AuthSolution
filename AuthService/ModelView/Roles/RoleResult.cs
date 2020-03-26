@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace AuthService.ModelView.Roles
 {
-    public class RoleResult<TRole>
-        where TRole :IdentityRole
+    public class RoleResult<TRole, TKey>
+        where TRole :IdentityRole<TKey>        
     {
      
         public RoleResult(TRole model)
@@ -15,7 +15,7 @@ namespace AuthService.ModelView.Roles
             Actions= model.ActionsList;
 
         }
-        public int Id { get; set; }
+        public TKey Id { get; set; }
         public string Name { get; set; }
         public List<RoleActions> Actions { get; set; }
        

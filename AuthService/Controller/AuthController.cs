@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace AuthService.Controller
 {
-    
-    public abstract class AuthController<TUser, TUserRole> : ControllerBase
-         where TUser : IdentityUser
-         where TUserRole : IdentityUserRole
+
+    public abstract class AuthController<TUser, TUserRole, TKey> : ControllerBase
+         where TUser : IdentityUser<TKey>
+         where TUserRole : IdentityUserRole<TKey>
     {
-        IAuthRepository<TUser, TUserRole> _user;
-        public AuthController(IAuthRepository<TUser, TUserRole> auth)
+        IAuthRepository<TUser, TUserRole, TKey> _user;
+        public AuthController(IAuthRepository<TUser, TUserRole, TKey> auth)
         {
             _user = auth;
         }
@@ -157,7 +157,7 @@ namespace AuthService.Controller
             }
         }
 
-        private int UserId
+        private TKey UserId
         {
             get
             {
@@ -168,7 +168,17 @@ namespace AuthService.Controller
                     throw new CoreException("Anuthorize", 401);
 
                 }
-                return int.Parse(userId);
+                var result = Activator.CreateInstance(typeof(TKey));
+                if (typeof(TKey).Name == typeof(int).Name)
+                {
+
+                    result = int.Parse(userId);
+                }else if(typeof(TKey).Name== typeof(string).Name)
+                {
+                    result = userId;
+                }
+                return (TKey)result;
+
             }
         }
     }

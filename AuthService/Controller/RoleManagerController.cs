@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace AuthService.Controller
 {
-    public class RoleManagerController<TRole> : ControllerBase
-        where TRole : IdentityRole
+    public class RoleManagerController<TRole, TKey> : ControllerBase
+        where TRole : IdentityRole<TKey>
     {
-        IRoleRepository<TRole> _roles;
-        public RoleManagerController(IRoleRepository<TRole> role)
+        IRoleRepository<TRole, TKey> _roles;
+        public RoleManagerController(IRoleRepository<TRole, TKey> role)
         {
             _roles = role;
         }
@@ -28,8 +28,8 @@ namespace AuthService.Controller
             try
             {
                 SuccessResult result = new SuccessResult();
-                bool success = await _roles.AddRole(model, this.UserId());
-                result.Id = model.Id;
+                bool success = await _roles.AddRole(model, this.UserId<TKey>());
+                result.Id = model.Id.ToString();
                 return result;
             }
             catch(Exception ext)
@@ -40,17 +40,17 @@ namespace AuthService.Controller
         }
         [HttpGet]
         [Auth(ClaimTypes.Role, "CanReadResource")]
-        public virtual NetResult<List<RoleResult<TRole>>> GetActiveRoles()
+        public virtual NetResult<List<RoleResult<TRole, TKey>>> GetActiveRoles()
         {
-            var result = _roles.Find(m=>m.TableStatus== RepositoryCore.Enums.Enum.TableStatus.Active).Select(m => new RoleResult<TRole>(m)).ToList();
+            var result = _roles.Find(m=>m.TableStatus== RepositoryCore.Enums.Enum.TableStatus.Active).Select(m => new RoleResult<TRole, TKey>(m)).ToList();
             return result;
         }
         [HttpGet]
        
-        public virtual NetResult<RoleResult<TRole>> GetRoleById(int id)
+        public virtual NetResult<RoleResult<TRole, TKey>> GetRoleById(TKey id)
         {
             var role = _roles.Get(id);
-            var result = new RoleResult<TRole>(role);
+            var result = new RoleResult<TRole, TKey>(role);
             return result;
         }
         [HttpDelete]
@@ -60,7 +60,7 @@ namespace AuthService.Controller
             try
             {
                
-               result.Success=await _roles.DeleteRole(id, this.UserId());
+               result.Success=await _roles.DeleteRole(id, this.UserId<TKey>());
                 
             }
             catch(Exception ext)
@@ -77,7 +77,7 @@ namespace AuthService.Controller
             SuccessResult result = new SuccessResult();
             try
             {
-               result.Success=await _roles.UpdateRole(model, this.UserId());
+               result.Success=await _roles.UpdateRole(model, this.UserId<TKey>());
 
             }catch(Exception ext)
             {

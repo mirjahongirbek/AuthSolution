@@ -65,7 +65,7 @@ namespace AuthService
                          };
                      });
         }
-        public static int UserId(this ControllerBase cBase)
+        public static TKey UserId<TKey>(this ControllerBase cBase)
         {
             var userId = cBase.User.FindFirst("Id")?.Value;
             if (string.IsNullOrEmpty(userId))
@@ -74,7 +74,16 @@ namespace AuthService
                 throw new CoreException("Anuthorize", 401);
 
             }
-            return int.Parse(userId);
+            var result = Activator.CreateInstance(typeof(TKey));
+            if (typeof(TKey).Name == typeof(int).Name)
+            {
+                result = int.Parse(userId);
+            }
+            else
+            {
+                result = userId;
+            }
+            return (TKey)(result);
         }
         public static bool IsAuthorize(this AuthorizationFilterContext context)
         {

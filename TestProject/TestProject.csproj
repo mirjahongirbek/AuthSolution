@@ -27,9 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\EntityRepository\EntityRepository\EntityRepository.csproj" />
+    <ProjectReference Include="..\..\Mongodb\MongoRepository\MongoRepositorys.csproj" />
     <ProjectReference Include="..\..\RepositoryCore\RepositoryCore\RepositoryCore.csproj" />
     <ProjectReference Include="..\AuthService\AuthService.csproj" />
+    <ProjectReference Include="..\MongoAuthService\MongoAuthService.csproj" />
   </ItemGroup>
 
 </Project>

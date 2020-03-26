@@ -1,16 +1,14 @@
-﻿
-using AuthService.Enum;
-using Newtonsoft.Json;
+﻿using AuthService.Enum;
+using AuthService.ModelView;
+using RepositoryCore.CoreState;
 using RepositoryCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Runtime.Serialization;
 
 namespace AuthService.Models
 {
-    public partial class IdentityUser<TKey> : IEntity<TKey>
+    public abstract partial class IdentityUser<TKey> : IEntity<TKey>
     {
         public virtual TKey Id { get; set; }
         public virtual string UserName { get; set; }
@@ -27,266 +25,76 @@ namespace AuthService.Models
         public virtual string RefreshToken { get; set; }
         public virtual string Token { get; set; }
         public virtual bool PhoneNumberConfirmed { get; set; }
+        public virtual string PhoneNumber { get; set; }
         public virtual int Position { get; set; }
-
-        //{
-        //    try
-        //    {
-        //        if (string.IsNullOrEmpty(Devices))
-        //        {
-        //            userDevice = new List<DeviceInfo>();
-        //            return userDevice;
-        //        }
-        //        userDevice = JsonConvert.DeserializeObject<List<DeviceInfo>>(Devices);
-        //        return userDevice;
-        //    }
-        //    catch (Exception ext)
-        //    {
-        //        Console.WriteLine("Idenity User Error:" + ext.Message);
-        //        userDevice = new List<DeviceInfo>();
-        //        return userDevice;
-        //    }
-        /*  if (string.IsNullOrEmpty(Devices)) { Devices = ""; return new List<DeviceInfo>(); }
-         var devices=Devices.Split(",");
-          return devices.ToList();*/
+        public virtual bool IsSendOtp { get; set; }
+       
     }
 
-
-
-    /// <summary>
-    /// Represents a user in the identity system
-    /// </summary>
-    /// <typeparam name="TKey">The type used for the primary key for the user.</typeparam>
-    //public partial class IdentityUser:IEntity<int>
-    //{
-    //    #region IsHide
-    //    /// <summary>
-    //    /// Initializes a new instance of <see cref="IdentityUser{TKey}"/>.
-    //    /// </summary>
-    //    public IdentityUser() { }
-    //    /// <summary>
-    //    /// Initializes a new instance of <see cref="IdentityUser{TKey}"/>.
-    //    /// </summary>
-    //    /// <param name="userName">The user name.</param>
-    //    public IdentityUser(string userName) : this()
-    //    {
-    //        UserName = userName;
-    //    }
-    //    /// <summary>
-    //    /// Gets or sets the primary key for this user.
-    //    /// </summary>
-    //    [Column("id")]
-    //    public virtual int Id { get; set; }
-    //    /// <summary>
-    //    /// Gets or sets the user name for this user.
-    //    /// </summary>
-    //    [Column("user_name")]
-    //    public virtual string UserName { get; set; }
-
-    //    /// <summary>
-    //    /// Gets or sets the normalized user name for this user.
-    //    /// </summary>
-    //    [NotMapped]
-    //    public virtual string NormalizedUserName { get { return UserName?.ToLower(); } }
-
-    //    /// <summary>
-    //    /// Gets or sets the email address for this user.
-    //    /// </summary>
-    //    [Column("email")]
-    //    public virtual string Email { get; set; }
-    //    [Column("last_otp")]
-    //    public virtual string LastOtp { get; set; }
-    //    [Column("last_otp_date")]
-    //    public virtual DateTime LastOtpDate { get; set; }
-    //    [Column("error_otp_count")]
-    //    public virtual int ErrorOtpCount { get; set; }
-
-    
-    //    /// <summary>
-    //    /// Gets or sets a flag indicating if a user has confirmed their email address.
-    //    /// </summary>
-    //    /// <value>True if the email address has been confirmed, otherwise false.</value>
-    //    [Column("confirm")]
-    //    public virtual bool Confirmed { get; set; }
-    //    [Column("user_status")]
-    //    public virtual UserStatus UserStatus { get; set; }
-    //    #endregion
-    //    /// <summary>
-    //    /// Gets or sets a salted and hashed representation of the password for this user.
-    //    /// </summary>
-    //    [IgnoreDataMember]
-    //    [Column("password")]
-    //    public virtual string Password { get; set; }
-    //    private List<DeviceInfo> userDevice;
-    //    [IgnoreDataMember]
-    //    [Column("devices")]
-    //    public string Devices { get; set; }
-    //    [NotMapped]
-    //    public List<DeviceInfo> DeviceList { get {
-    //            try
-    //            {
-    //                if (string.IsNullOrEmpty(Devices))
-    //                {
-    //                    userDevice= new List<DeviceInfo>();
-    //                    return userDevice;
-    //                }
-    //               userDevice= JsonConvert.DeserializeObject<List<DeviceInfo>>(Devices);
-    //                return userDevice;
-    //            }
-    //            catch(Exception ext)
-    //            {
-    //                Console.WriteLine("Idenity User Error:" + ext.Message);
-    //                userDevice= new List<DeviceInfo>();
-    //                return userDevice;
-    //            }
-                
-                
-
-    //          /*  if (string.IsNullOrEmpty(Devices)) { Devices = ""; return new List<DeviceInfo>(); }
-    //           var devices=Devices.Split(",");
-    //            return devices.ToList();*/
-    //        } }
-    //    /// <summary>
-    //    /// A random value that must change whenever a users credentials change (password changed, login removed)
-    //    /// </summary>
-    //    [Column("security_stamp")]
-    //    public virtual string SecurityStamp { get; set; }
-
-    //    /// <summary>
-    //    /// A random value that must change whenever a user is persisted to the store
-    //    /// </summary>
-    //    [Column("concurrency_stamp")]
-    //    public virtual string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
-
-    //    /// <summary>
-    //    /// Gets or sets a telephone number for the user.
-    //    /// </summary>
-    //    [Column("phone_number")]
-    //    public virtual string PhoneNumber { get; set; }
-
-    //    /// <summary>
-    //    /// Gets or sets a flag indicating if a user has confirmed their telephone address.
-    //    /// </summary>
-    //    /// <value>True if the telephone number has been confirmed, otherwise false.</value>
-    //    [Column("phone_confirm")]
-    //    public virtual bool PhoneNumberConfirmed { get; set; }
-
-    //    /// <summary>
-    //    /// Gets or sets a flag indicating if two factor authentication is enabled for this user.
-    //    /// </summary>
-    //    /// <value>True if 2fa is enabled, otherwise false.</value>
-    //    [Column("two_factor_enabled")]
-    //    public virtual bool TwoFactorEnabled { get; set; }
-
-    //    /// <summary>
-    //    /// Gets or sets the date and time, in UTC, when any user lockout ends.
-    //    /// </summary>
-    //    /// <remarks>
-    //    /// A value in the past means the user is not locked out.
-    //    /// </remarks>
-    //    [Column("lockout_end")]
-    //    public virtual DateTimeOffset? LockoutEnd { get; set; }
-
-    //    /// <summary>
-    //    /// Gets or sets a flag indicating if the user could be locked out.
-    //    /// </summary>
-    //    /// <value>True if the user could be locked out, otherwise false.</value>
-    //    [Column("lockout_enabled")]
-    //    public virtual bool LockoutEnabled { get; set; }
-
-    //    /// <summary>
-    //    /// Gets or sets the number of failed login attempts for the current user.
-    //    /// </summary>
-    //    [Column("access_failed_count")]
-    //    public virtual int AccessFailedCount { get; set; }
-
-    //    /// <summary>
-    //    /// Date when User Last Login In Site
-    //    /// </summary>
-    //    [Column("last_login_date")]
-    //    public virtual DateTime LastLoginDate { get; set; }
-
-    //    /// <summary>
-    //    /// User Last Token
-    //    /// </summary>
-    //    [Column("token")]
-    //    public virtual string Token { get; set; }
-
-    //    /// <summary>
-    //    ///  User RefResh Token
-    //    /// </summary>
-    //    [Column("refresh_token")]
-    //    public virtual string RefreshToken { get; set; }
-
-    //    /// <summary>
-    //    /// User Position Jet JWt Token
-    //    /// </summary>
-    //    [Column("position")]
-    //    public virtual int Position { get; set; }
-    //    [Column("is_send_otp")]
-    //    public virtual bool IsSendOtp { get; set; }
-
-
-    //    /// <summary>
-    //    /// Returns the username for this user.
-    //    /// </summary>
-    //    public override string ToString()
-    //        => UserName;
-    //}
-    /// <summary>
-    /// Identity User Functions
-    /// </summary>
-    public partial class IdentityUser
+    public abstract partial  class IdentityUser<TKey>
     {
-        public bool CheckDevice(string deviceId)
-        {
-            var selectDevice = DeviceList.FirstOrDefault(m => m.DeviceId == deviceId);
-            if (selectDevice== null){
-                return false;
-            }
-            selectDevice.LastInCome = DateTime.Now;
-            Devices = JsonConvert.SerializeObject(DeviceList);
-            return true;
-        }
-        public void AddDeviceId(string deviceId, string deviceName)
-        {
-            if (CheckDevice(deviceId))
-            {
-                return;
-            }
-            DeviceInfo deviceInfo = new DeviceInfo
-            {
-                AddDate = DateTime.Now,
-                DeviceId = deviceId,
-                 DeviceName= deviceName,
-                  LastInCome= DateTime.Now
-            };
-            userDevice.Add(deviceInfo);
-            Devices = JsonConvert.SerializeObject(userDevice);
+        public bool CheckOtp(string otp)
+        { 
 
+
+            return false;
         }
+        public void Create<TKey>(RegisterUser reg)
+        {
+            UserName = reg.UserName;
+            Password = RepositoryState.GetHashString(reg.Password);
+            Email = reg.Email;
+        }
+        public abstract bool CheckDevice(string deviceId);
+        //{
+        //    var selectDevice = DeviceList.FirstOrDefault(m => m.DeviceId == deviceId);
+        //    if (selectDevice == null)
+        //    {
+        //        return false;
+        //    }
+        //    selectDevice.LastInCome = DateTime.Now;
+        //    Devices = JsonConvert.SerializeObject(DeviceList);
+        //    return true;
+        //}
+        public abstract void AddDeviceId(string deviceId, string deviceName);
+        //{
+        //    if (CheckDevice(deviceId))
+        //    {
+        //        return;
+        //    }
+        //    DeviceInfo deviceInfo = new DeviceInfo
+        //    {
+        //        AddDate = DateTime.Now,
+        //        DeviceId = deviceId,
+        //        DeviceName = deviceName,
+        //        LastInCome = DateTime.Now
+        //    };
+        //    userDevice.Add(deviceInfo);
+        //    Devices = JsonConvert.SerializeObject(userDevice);
+
+        //}
         [NotMapped]
         public bool ShouldSendOtp { get; set; }
-        public void ChangeLastIncome(string deviceId)
-        {
-            if (!CheckDevice(deviceId))
-            {
-                return;
-            }
-           var myDevice= userDevice.FirstOrDefault(m => m.DeviceId == deviceId);
-            myDevice.LastInCome = DateTime.Now;
-            Devices = JsonConvert.SerializeObject(userDevice);
+        public abstract void ChangeLastIncome(string deviceId);
+        //{
+        //    if (!CheckDevice(deviceId))
+        //    {
+        //        return;
+        //    }
+        //    var myDevice = userDevice.FirstOrDefault(m => m.DeviceId == deviceId);
+        //    myDevice.LastInCome = DateTime.Now;
+        //    Devices = JsonConvert.SerializeObject(userDevice);
 
-        }
-        
-    }    
+        //}
+
+    }
 
 
     public class DeviceInfo
     {
         public string DeviceId { get; set; }
         public string DeviceName { get; set; }
-        public DateTime AddDate { get; set; } 
+        public DateTime AddDate { get; set; }
         public DateTime LastInCome { get; set; }
         public string Data { get; set; }
     }

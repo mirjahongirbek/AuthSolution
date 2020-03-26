@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace AuthService.Interfaces.Service
 {
-    public interface IUserRoleRepository<TUser, TRole, TUserRole, TDeleteData, TKey>
+    public interface IUserRoleRepository<TUser, TRole, TUserRole, TKey>
        where TUser : IdentityUser<TKey>
-       where TUserRole : IdentityUserRole
+       where TUserRole : IdentityUserRole<TKey>
        where TRole : IdentityRole<TKey>
-        where TDeleteData:DeleteData
+       // where TDeleteData:DeleteData
     {
-        Task<bool> AddUserRole(AddUserRoleModel model, int UserId);
-        List<TRole> GetUserRoles(int userId);
-        Task<bool> DeleteUserRole(AddUserRoleModel model, int userId);
+        Task<bool> AddUserRole(AddUserRoleModel<TKey> model, TKey UserId);
+        List<TRole> GetUserRoles(TKey userId);
+        Task<bool> DeleteUserRole(AddUserRoleModel<TKey> model, TKey userId);
     }
 }

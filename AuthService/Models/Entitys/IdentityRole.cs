@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace AuthService.Models
 {
-    public class IdentityRole<TKey> : IEntity<TKey>
-      
-    {
-        
+    public class IdentityRole<TKey> : IEntity<TKey>      
+    {        
         public virtual TKey Id { get; set; }
         public virtual string Name { get; set; }
         public virtual int Position { get; set; }
         public RoleEnum Roles { get; set; }
         public virtual string Description { get; set; }
         public List<RoleActions> ActionsList { get; set; }
+        public TableStatus TableStatus { get; set; }
+        //TableStatus
     }
     /// <summary>
     /// Represents a role in the identity system

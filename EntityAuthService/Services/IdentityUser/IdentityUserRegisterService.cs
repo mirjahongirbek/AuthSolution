@@ -1,4 +1,5 @@
-﻿using AuthService.Enum;
+﻿using AuthService;
+using AuthService.Enum;
 using AuthService.ModelView;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.CoreState;
@@ -7,10 +8,10 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthService.Services
+namespace EntityRepository.Services
 {
     //Register Partial
-    public partial class IdentityUserService<TUser, TRole, TUserRole>
+    public partial class EntityUserService<TUser, TRole, TUserRole>
     {
         public async Task<RegisterResult> RegisterAsync(RegisterUser model)
         {
@@ -39,7 +40,7 @@ namespace AuthService.Services
             //_dbSet.Add(user);
             Add(user);
             result.IsRegister = true;
-            result.Name = user.UserName;
+            result.UserName = user.UserName;
             return result;
 
         }

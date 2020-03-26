@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 
-namespace AuthService.Services.MinorData
+namespace EntityRepository.Services
 {
    public class DeleteDataService<TDeleteData>: IDeleteDataService<TDeleteData>
         where TDeleteData :DeleteData

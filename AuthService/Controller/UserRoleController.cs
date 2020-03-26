@@ -5,7 +5,6 @@ using AuthService.ModelView;
 using AuthService.ModelView.Roles;
 using AuthService.ModelView.UserRole;
 using CoreResults;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,40 +13,36 @@ using System.Threading.Tasks;
 
 namespace AuthService.Controller
 {
-    
-    public class UserRoleController<TUser, TUserRole, TRole, TDeleteData> : ControllerBase
-         where TUser : IdentityUser
-         where TUserRole : IdentityUserRole
-          where TRole : IdentityRole
-        where TDeleteData:DeleteData
+
+    public class UserRoleController<TUser, TUserRole, TRole, TKey> : ControllerBase
+         where TUser : IdentityUser<TKey>
+         where TUserRole : IdentityUserRole<TKey>
+          where TRole : IdentityRole<TKey>
     {
-      
-        IUserRoleRepository<TUser, TRole, TUserRole, TDeleteData> _userRole;
-        public UserRoleController(IUserRoleRepository<TUser, TRole, TUserRole, TDeleteData> userRole
-            
-            )
+
+        IUserRoleRepository<TUser, TRole, TUserRole, TKey> _userRole;
+        public UserRoleController(IUserRoleRepository<TUser, TRole, TUserRole, TKey> userRole)
         {
-         
             _userRole = userRole;
-            
+
         }
         [HttpPost]
-        public async Task<NetResult<SuccessResult>> AddUserToRole([FromBody]AddUserRoleModel model)
+        public async Task<NetResult<SuccessResult>> AddUserToRole([FromBody]AddUserRoleModel<TKey> model)
         {
             try
             {
                 SuccessResult result = new SuccessResult();
-                result.Success = await _userRole.AddUserRole(model, this.UserId());
+                result.Success = await _userRole.AddUserRole(model, this.UserId<TKey>());
                 return result;
             }
             catch (Exception ext) { return ext; }
         }
         [HttpGet]
-        public async Task<NetResult<List<RoleResult<TRole>>>> GetUserRoles()
+        public async Task<NetResult<List<RoleResult<TRole,TKey>>>> GetUserRoles()
         {
             try
             {
-                var roles = _userRole.GetUserRoles(this.UserId()).Select(m => new RoleResult<TRole>(m)).ToList();
+                var roles = _userRole.GetUserRoles(this.UserId<TKey>()).Select(m => new RoleResult<TRole, TKey>(m)).ToList();
                 return roles;
             }
             catch (Exception ext)
@@ -55,23 +50,24 @@ namespace AuthService.Controller
                 return ext;
             }
         }
-      
+
         [HttpPost]
-        public async Task<object> DeleteUserRole([FromBody]AddUserRoleModel model)
+        public async Task<object> DeleteUserRole([FromBody]AddUserRoleModel<TKey> model)
         {
             SuccessResult result = new SuccessResult();
             try
             {
-               result.Success=await _userRole.DeleteUserRole(model, this.UserId());
+                result.Success = await _userRole.DeleteUserRole(model, this.UserId<TKey>());
 
-            }catch(Exception ext)
+            }
+            catch (Exception ext)
             {
-                result.Success = false;    
+                result.Success = false;
             }
             return result;
         }
 
-        
+
 
 
     }

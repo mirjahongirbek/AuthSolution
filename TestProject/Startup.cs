@@ -1,9 +1,4 @@
 ﻿using AuthService;
-using AuthService.Interfaces.Service;
-using AuthService.Models;
-using AuthService.Services;
-using AuthService.Services.MinorData;
-using AuthService.Services.UserRole;
 using CoreResults;
 using EntityRepository.Context;
 using Microsoft.AspNetCore.Builder;
@@ -11,8 +6,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoAuthService;
+using MongoAuthService.Models;
+using MongoRepositorys.MongoContext;
+using MongoRepositorys.Repository;
+using RepositoryCore.Interfaces;
 using TestProject.Models.Db;
-using TestProject.Models.User;
 
 namespace TestProject
 {
@@ -24,19 +23,22 @@ namespace TestProject
         }
 
         public IConfiguration Configuration { get; }
-       
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             CoreState.AddContextWithSwagger(services, "http://172.17.9.105:1600/api", "authTest", "test", "test");
             services.AddScoped<IDbContext, AuthDataContext>();
-            services.AddScoped<IAuthRepository<User, UserRole>, IdentityUserService<User, Role, UserRole>>();
+            services.AddSingleton<IMongoContext>(new MongoDataContext("mongodb://127.0.0.1:27017"));
+            services.AddScoped(typeof(IRepositoryCore<,>), typeof(MongoRepository<>));
+            AuthState.RegisterAuth<MongoUser, MongoRole, MongoUserRole>(services);
             services.AddAuthSolutionService("mysupersecret_secretkey!123");
-            services.AddScoped<IRoleRepository<Role>, IdentityRoleService<Role>>();
-            services.AddScoped<IDeleteDataService<DeleteData>, DeleteDataService<DeleteData>>();
-            services.AddScoped<IUserRoleRepository<User, Role, UserRole,DeleteData>, UserRoleRepositoryService<User, Role, UserRole, DeleteData>>();
+            //services.AddScoped<IAuthRepository<User, UserRole, int>, IdentityUserService<User, Role, UserRole>>();
+            //services.AddScoped<IRoleRepository<Role>, IdentityRoleService<Role>>();
+            //services.AddScoped<IDeleteDataService<DeleteData>, DeleteDataService<DeleteData>>();
+            //services.AddScoped<IUserRoleRepository<User, Role, UserRole,DeleteData>, UserRoleRepositoryService<User, Role, UserRole, DeleteData>>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-         //  services.AddContextWithSwagger();
+            //  services.AddContextWithSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,10 +52,10 @@ namespace TestProject
 
             app.ContextWithSwagger();
             app.UseMvc();
-          
+
         }
     }
-   
+
 }
 /* public void SwaggerService(IServiceCollection services)
         {

@@ -1,33 +1,40 @@
-﻿using AuthService.Interfaces.Service;
-using AuthService.Models;
+﻿using AuthService;
+using AuthService.Interfaces.Service;
 using AuthService.ModelView;
 using EntityRepository.Context;
+using EntityRepository.Models;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.CoreState;
 using RepositoryCore.Exceptions;
+using RepositoryCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace AuthService.Services
+namespace EntityRepository.Services
 {
 
-    public partial class IdentityUserService<TUser, TRole, TUserRole>
-        : IAuthRepository<TUser, TUserRole>
-       where TUser : IdentityUser
-       where TUserRole : IdentityUserRole
-       where TRole : IdentityRole
+    public partial class EntityUserService<TUser, TRole, TUserRole>
+        : IAuthRepository<TUser, TUserRole, int>
+       where TUser : EntityUser
+       where TUserRole :EntityUserRole
+       where TRole : EntityRole
     {
         #region Default Constructor
         DbSet<TUser> _dbSet;
         DbSet<TUserRole> _userRole;
         DbContext _context;
-        
-        IRoleRepository<TRole> _roleService;
-        public IdentityUserService(IDbContext context, IRoleRepository<TRole> roleService)
+        IRepositoryCore<TUser, int> _repo;
+        IRoleRepository<TRole, int> _roleService;
+        public EntityUserService(IDbContext context,
+            IRepositoryCore<TUser, int> repo,
+            IRoleRepository<TRole, int> roleService
+            
+            )
         {
+            _repo = repo;
             _dbSet = context.DataContext.Set<TUser>();
             _userRole = context.DataContext.Set<TUserRole>();
             _context = context.DataContext;
@@ -161,10 +168,7 @@ namespace AuthService.Services
             _userRole.Add(userRole);
             _context.SaveChanges();
         }
-        #region Register
-
-     
-        #endregion
+        
         #region Password
         public async Task<bool> RestorePasswor(RestorePasswordModel model)
         {
@@ -205,40 +209,24 @@ namespace AuthService.Services
             await Update(user);
             return true;
         }
+
+        public void AddUserRole(int userId, TUserRole userRole)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LoginResult> LoginResult(LoginViewModal model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ChangePassword(int userId, ChangePasswordModel model)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
-      
-       
+
+
     }
    
 }
-//Active User,1 
-
-
-
-
-/*public OtpResult CheckOtp(TUser user, string otp)
-       {
-           if (user.LastOtpDate.AddMinutes(3) < DateTime.Now)
-           {
-               return OtpResult.TimeExit;
-           }
-           if (user.ErrorOtpCount > 4)
-           {
-               return OtpResult.MuchError;
-           }
-           if (user.LastOtp == otp)
-           {
-               user.ErrorOtpCount = 0;
-               return OtpResult.Success;
-
-           }
-           user.ErrorOtpCount++;
-           Update(user).Wait();
-           return OtpResult.OtpError;
-       }
-      public OtpResult CheckOtp(ClaimsPrincipal claims, string otp)
-       {
-
-           var user = GetByUserName(claims.Identity.Name).Result;
-           return CheckOtp(user, otp);
-       }*/

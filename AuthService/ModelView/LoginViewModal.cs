@@ -1,5 +1,5 @@
 ﻿using AuthService.Enum;
-
+using AuthService.Models;
 
 namespace AuthService.ModelView
 {
@@ -20,15 +20,28 @@ namespace AuthService.ModelView
         public string Email { get; set; }
         public string Password { get; set; }
         public string ComparePassword { get; set; }
-        
+        public bool CheckValidate()
+        {
+            return true;
+        }        
         
     }
     public class RegisterResult
     {
         public bool IsRegister { get; set; }
-        public string Name { get; set; }
+        public string UserName { get; set; }
         public string ErrorMessage { get; set; } 
         public int ErrorId { get; set; }
+        public static RegisterResult Create(IdentityUser<string> user)
+        {
+            RegisterResult result = new RegisterResult()
+            {
+                IsRegister = true,
+                ErrorId = 0,
+               UserName= user.UserName
+            };
+            return result;
+        }
     }
     public class RestorePasswordModel
     {

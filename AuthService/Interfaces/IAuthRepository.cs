@@ -23,9 +23,9 @@ namespace AuthService.Interfaces.Service
         bool AddUser(TUser user);
         Task<bool> RegisterAsync(TUser model);
         #endregion
-
+        bool CheckUserOtp(TUser user, string otp);
         #region Role
-        void AddUserRole(TUserRole userRole);
+        void AddUserRole(TKey userId, TUserRole userRole);
         #endregion
         Task<bool> Delete(TKey id);
         LoginResult LoginByRefresh(string refreshToken);
@@ -44,7 +44,7 @@ namespace AuthService.Interfaces.Service
        
         /*   Task<(LoginResult, TUser)> Login(string username, string password);*/
         void SetRefresh(TUser user);
-        string SetToken(List<Claim> claims, TUser user);
+      
 
         #region Check
         TUser CheckUser(string userName);
@@ -56,9 +56,10 @@ namespace AuthService.Interfaces.Service
         /* OtpResult CheckOtp(TUser user, string otp);*/
         /* OtpResult CheckOtp(ClaimsPrincipal user, string otp);*/
         void SetOtp(ClaimsPrincipal user, string Otp);
-        TUser SetOtp(int UserId, string otp);
+        TUser SetOtp(TKey UserId, string otp);
         TUser SetOtp(string username, string otp);
         bool SetOtp(TUser user, string otp);
+        Task<bool> ChangePassword(TKey userId, ChangePasswordModel model);
         Task<bool> ChangePassword(TUser user, ChangePasswordModel model);
         Task<LoginResult> ActivateUser(ActivateUserModel model);
         #endregion

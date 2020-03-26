@@ -17,3 +17,5 @@ C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\Auth
 C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.csproj.CopyComplete
 C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.dll
 C:\projects\RepositoryCore\AuthSolution\AuthService\obj\Debug\netcoreapp2.2\AuthService.pdb
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\MongoRepositorys.dll
+C:\projects\RepositoryCore\AuthSolution\AuthService\bin\Debug\netcoreapp2.2\MongoRepositorys.pdb

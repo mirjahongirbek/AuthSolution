@@ -97,6 +97,73 @@
         }
       }
     },
+    "C:\\projects\\RepositoryCore\\AuthSolution\\MongoAuthService\\MongoAuthService.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\RepositoryCore\\AuthSolution\\MongoAuthService\\MongoAuthService.csproj",
+        "projectName": "MongoAuthService",
+        "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\MongoAuthService\\MongoAuthService.csproj",
+        "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\RepositoryCore\\AuthSolution\\MongoAuthService\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\murtozayev-j\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "\\\\172.17.9.248\\open\\nuget": {},
+          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj"
+              },
+              "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\projects\\RepositoryCore\\AuthSolution\\TestProject\\TestProject.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -128,8 +195,11 @@
               "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj": {
                 "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj"
               },
-              "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj": {
-                "projectPath": "C:\\projects\\RepositoryCore\\EntityRepository\\EntityRepository\\EntityRepository.csproj"
+              "C:\\projects\\RepositoryCore\\AuthSolution\\MongoAuthService\\MongoAuthService.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\MongoAuthService\\MongoAuthService.csproj"
+              },
+              "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\MongoRepositorys.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\Mongodb\\MongoRepository\\MongoRepositorys.csproj"
               },
               "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
                 "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"

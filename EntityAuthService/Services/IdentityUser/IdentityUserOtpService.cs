@@ -1,12 +1,13 @@
-﻿using AuthService.Enum;
+﻿using AuthService;
+using AuthService.Enum;
 using RepositoryCore.Exceptions;
 using System;
 using System.Security.Claims;
 
-namespace AuthService.Services
+namespace EntityRepository.Services
 {
     //Check Otp
-    public partial class IdentityUserService<TUser, TRole, TUserRole>
+    public partial class EntityUserService<TUser, TRole, TUserRole>
     {
         #region Otp
 

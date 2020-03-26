@@ -3,7 +3,7 @@
     public class SuccessResult
     {
         public bool Success { get; set; }
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 
 }

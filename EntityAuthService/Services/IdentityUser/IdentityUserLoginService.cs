@@ -1,4 +1,5 @@
-﻿using AuthService.Attributes;
+﻿using AuthService;
+using AuthService.Attributes;
 using AuthService.ModelView;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,10 +13,9 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace AuthService.Services
+namespace EntityRepository.Services
 {
-    //Login Partial class
-    public partial class IdentityUserService<TUser, TRole, TUserRole>
+    public partial class EntityUserService<TUser, TRole, TUserRole>
     {
         /// <summary>
         ///  this Method use for Activate user Using sms confirm
@@ -24,11 +24,11 @@ namespace AuthService.Services
         /// <returns></returns>
         public async Task<LoginResult> ActivateUser(ActivateUserModel model)
         {
-
+            
             TUser user = null;
             if (AuthOptions.SetNameAsPhone)
             {
-                user = GetFirst(m => m.UserName == RepositoryState.ParsePhone(model.UserName));
+                user =  GetFirst(m => m.UserName == RepositoryState.ParsePhone(model.UserName));
             }
             else
             {
@@ -62,7 +62,7 @@ namespace AuthService.Services
                 AccessToken = user.Token,
                 UserName = user.UserName,
                 RefreshToken = user.RefreshToken,
-                UserId = user.Id,
+                UserId = user.Id.ToString(),
                 Roles = roles.Select(m => m.Name).ToList()
             };
             return loginResult;
@@ -181,8 +181,6 @@ namespace AuthService.Services
                     if (i.GetValue(user) != null)
                         claims.Add(new Claim(name.ToLower(), i.GetValue(user).ToString().ToLower()));
                 }
-
-
             }
             return claims;
         }
