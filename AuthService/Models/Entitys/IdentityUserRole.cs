@@ -12,6 +12,12 @@ namespace AuthService.Models
     public  class IdentityUserRole<TKey> : IEntity<TKey>
     {
       
+        public IdentityUserRole()
+        {
+            CreateDate = DateTime.Now;
+        }
+
+        public DateTime CreateDate { get; set; }
         public TKey Id { get; set; }
         /// <summary>
         /// Gets or sets the primary key of the user that is linked to a role.

@@ -38,11 +38,24 @@ namespace AuthService.Controller
             catch (Exception ext) { return ext; }
         }
         [HttpGet]
-        public async Task<NetResult<List<RoleResult<TRole,TKey>>>> GetUserRoles()
+        public async Task<NetResult<List<RoleResult<TRole, TKey>>>> GetMyRoles()
         {
             try
             {
                 var roles = _userRole.GetUserRoles(this.UserId<TKey>()).Select(m => new RoleResult<TRole, TKey>(m)).ToList();
+                return roles;
+            }
+            catch (Exception ext)
+            {
+                return ext;
+            }
+        }
+        [HttpGet]
+        public async Task<NetResult<List<RoleResult<TRole, TKey>>>> GetUserRoles(TKey id)
+        {
+            try
+            {
+                var roles = _userRole.GetUserRoles(id).Select(m => new RoleResult<TRole, TKey>(m)).ToList();
                 return roles;
             }
             catch (Exception ext)

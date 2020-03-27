@@ -51,6 +51,12 @@ namespace AuthService.Controller
                     var otp = RepositoryState.RandomInt();
                     _user.SetOtp(result.Item2, otp);
                     SendSms(result.Item2.PhoneNumber, otp);
+                    return new LoginResult()
+                    {
+                        UserName = result.Item2.UserName,
+                        UserId = result.Item2.Id.ToString(),
+                        IsSentOtp = true,
+                    };
                 }
                 return null;
             }
@@ -80,9 +86,12 @@ namespace AuthService.Controller
             try
             {
                 var otp = RepositoryState.RandomInt();
-                var user = _user.SetOtp(userName, otp);
+                var user = await _user.GetByUserName(userName);
+                if (user == null) throw new CoreException("User not found");
+                user.Token = RepositoryState.GenerateRandomString(24);
+                _user.SetOtp(user, otp);
                 SendSms(user.PhoneNumber, otp);
-                return StatusCore.Success;
+                return new ResponseData() { Result = new { Token = user.Token, UserName = user.UserName, IsSendSms = true } };
             }
             catch (Exception ext)
             {
@@ -95,8 +104,21 @@ namespace AuthService.Controller
             try
             {
                 SuccessResult result = new SuccessResult();
-                bool isRestore = await _user.RestorePasswor(model);
-                return StatusCore.Success;
+                if (string.IsNullOrEmpty(model.Token))
+                {
+                    throw new CoreException("Token not found", 5);
+
+                }
+                var loginResult = await _user.RestorePasswor(model);
+                if (loginResult.IsSentOtp)
+                {
+                    SendSms(loginResult.UserName, model.Otp);
+                }
+                return new ResponseData()
+                {
+                    Result = loginResult
+                };
+
             }
             catch (Exception ext)
             {
@@ -106,16 +128,15 @@ namespace AuthService.Controller
         [HttpGet]
         public virtual async Task<NetResult<SuccessResult>> IsRegister(string userName)
         {
+            SuccessResult result = new SuccessResult();
             try
             {
-                SuccessResult result = new SuccessResult();
-
                 if (AuthOptions.SetNameAsPhone && !userName.Contains("@"))
                 {
 
                     userName = RepositoryState.ParsePhone(userName);
                 }
-                var user = _user.Find(m => m.UserName == userName || m.Email == userName);
+                var user = _user.GetFirst(m => m.UserName == userName || m.Email == userName);
                 if (user == null)
                     result.Success = false;
                 else
@@ -124,8 +145,10 @@ namespace AuthService.Controller
             }
             catch (Exception ext)
             {
-                return ext;
+                result.Success = false;
+                //return ext;
             }
+            return result;
         }
         [HttpPost]
         public virtual async Task<NetResult<SuccessResult>> ChangePassword([FromBody] ChangePasswordModel model)
@@ -133,7 +156,7 @@ namespace AuthService.Controller
             try
             {
                 SuccessResult result = new SuccessResult();
-                var user = _user.Get(UserId);
+                var user = _user.Get(this.UserId<TKey>());
                 if (RepositoryState.GetHashString(user.Password) == RepositoryState.GetHashString(model.OldPassword))
                     result.Success = await _user.ChangePassword(user, model);
                 return result;
@@ -157,30 +180,7 @@ namespace AuthService.Controller
             }
         }
 
-        private TKey UserId
-        {
-            get
-            {
-                var userId = User.FindFirst("Id")?.Value;
-                if (string.IsNullOrEmpty(userId))
-                {
-                    Response.StatusCode = 401;
-                    throw new CoreException("Anuthorize", 401);
 
-                }
-                var result = Activator.CreateInstance(typeof(TKey));
-                if (typeof(TKey).Name == typeof(int).Name)
-                {
-
-                    result = int.Parse(userId);
-                }else if(typeof(TKey).Name== typeof(string).Name)
-                {
-                    result = userId;
-                }
-                return (TKey)result;
-
-            }
-        }
     }
 
 }

@@ -43,7 +43,12 @@ namespace MongoAuthService.Services
             var user = CheckUserByUserName(model.UserName, model.Password);
             if (user == null)
             {
+                throw new CoreException("User not found", 0);
 
+            }
+            if (AuthOptions.CheckDeviceId && !user.CheckDevice(model.DeviceId))
+            {
+                return (null, user);
             }
             return (Login(user), user);
         }
@@ -71,7 +76,7 @@ namespace MongoAuthService.Services
             {
             }
             var user = CheckUser(model.UserName);
-            if (user != null) { }
+            if (user != null) { throw new CoreException("User not found", 0); }
             user = (TUser)Activator.CreateInstance(typeof(TUser));
             user.Create<string>(model);
             await RegisterAsync(user);
@@ -86,7 +91,7 @@ namespace MongoAuthService.Services
                 user = _repo.GetFirst(m => m.UserName == model.UserName.ParsePhone());
             }
             else user = _repo.GetFirst(m => m.UserName == model.UserName);
-            if (user == null) { }
+            if (user == null) { throw new CoreException("User not found", 0); }
             if (CheckUserOtp(user, model.Otp))
             {
                 user.AddDeviceId(model.DeviceId, model.DeviceName);
@@ -152,7 +157,7 @@ namespace MongoAuthService.Services
             {
                 userName = RepositoryState.ParsePhone(userName);
             }
-            return _repo.GetFirst(m => m.UserName == userName);
+            return _repo.GetFirst(m => m.UserName == userName);//?? throw new CoreException("User not found",0);
         }
 
         public TUser CheckUserByPhone(string userName, string phoneNumber)
@@ -168,6 +173,7 @@ namespace MongoAuthService.Services
         public TUser CheckUserByUserName(string userName, string password)
         {
             var user = CheckUser(userName);
+            if (user == null) { throw new CoreException("User not found", 0); }
             if (user.Password == RepositoryState.GetHashString(password))
             {
                 return user;
@@ -179,6 +185,7 @@ namespace MongoAuthService.Services
         {
             if (user.LastOtp == otp)
             {
+                user.PhoneNumberConfirmed = true;
                 return true;
             }
             return false;
@@ -252,18 +259,24 @@ namespace MongoAuthService.Services
         {
             return _repo.GetFirst(expression);
         }
-        public async Task<bool> RestorePasswor(RestorePasswordModel model)
+        public async Task<LoginResult> RestorePasswor(RestorePasswordModel model)
         {
             var user = await GetByUserName(model.UserName);
-            if (user != null)
+            if (user == null)
             {
-
+                throw new CoreException("User not found", 0);
             }
             if (string.IsNullOrEmpty(model.Token))
             {
                 model.Token = RepositoryState.GenerateRandomString(24);
                 SetOtp(user, RepositoryState.RandomInt(6));
-                return true;
+                model.Otp = user.LastOtp;
+                return new LoginResult()
+                {
+                    UserName = user.UserName,
+                    IsSentOtp = true,
+                    
+                };
             }
             if (user.Token == model.Token)
             {
@@ -271,7 +284,7 @@ namespace MongoAuthService.Services
                 {
                     user.Password = RepositoryState.GetHashString(model.Password);
                     await Update(user);
-                    return true;
+                    return Login(user);
                 }
                 throw new CoreException("Confirm Code is incorrct", 3);
             }
@@ -318,6 +331,6 @@ namespace MongoAuthService.Services
 
         }
     }
-   
+
 
 }

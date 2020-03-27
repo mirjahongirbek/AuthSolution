@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AuthService.Interfaces.Service;
-using AuthService.Models;
+using MongoAuthService.Models;
 using MongoRepositorys.Repository;
 using RepositoryCore.Exceptions;
 using RepositoryCore.Interfaces;
@@ -12,20 +12,21 @@ using RepositoryCore.Interfaces;
 namespace MongoAuthService.Services
 {
     public class MongoRoleService<T> : IRoleRepository<T, string>
-        where T : IdentityRole<string>
+        where T : MongoRole
     {
         IRepositoryCore<T, string> _repo;
 
         public MongoRoleService(IRepositoryCore<T, string> repo)
         {
-            if (repo is MongoRepository<T>)
-            {
-                _repo = repo;
-            }
-            else
-            {
-
-            }
+            _repo = repo;
+            //if (repo is MongoRepository<T>)
+            //{
+            //    _repo = repo;
+            //}
+            //else
+            //{
+            //    th
+            //}
         }
         public bool Add(T model)
         {
@@ -33,9 +34,16 @@ namespace MongoAuthService.Services
             return true;
         }
 
-        public Task<bool> AddRole(T role, string adUserId)
+        public async Task<bool> AddRole(T role, string adUserId)
         {
-            throw new NotImplementedException();
+           var exist= GetFirst(m => m.Name == role.Name && m.TableStatus != RepositoryCore.Enums.Enum.TableStatus.Deleted);
+            if(exist!= null)
+            {
+                throw new CoreException("Role Excist",21);
+            }
+            role.AddUserId = adUserId;
+            Add(role);
+            return true;
         }
 
         public bool Delete(T model)
@@ -49,9 +57,10 @@ namespace MongoAuthService.Services
             return _repo.Delete(id);
         }
 
-        public Task<bool> DeleteRole<TKey>(int id, TKey deleteUserId)
+        public async Task<bool> DeleteRole(string id, string deleteUserId)
         {
-            throw new NotImplementedException();
+            _repo.Delete(id);
+            return true;            
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
@@ -78,16 +87,15 @@ namespace MongoAuthService.Services
         {
             return _repo.Find(m => roles.Any(n => n == m.Id)).ToList();
         }
-
         public T Update(T model)
         {
             _repo.Update(model);
             return model;
         }
-
-        public Task<bool> UpdateRole(T model, string key)
+        public async Task<bool> UpdateRole(T model, string key)
         {
-            throw new NotImplementedException();
+            _repo.Update(model);
+            return true;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AuthService.Interfaces.Service
         T GetFirst(Expression<Func<T, bool>> expression);
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
         List<T> GetList(List<TKey> roles);
-        Task<bool> DeleteRole<TKey>(int id, TKey deleteUserId);
+        Task<bool> DeleteRole(TKey id, TKey deleteUserId);
         Task<bool> UpdateRole(T model, TKey key) ;
     }
 }

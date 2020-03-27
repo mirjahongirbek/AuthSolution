@@ -55,7 +55,7 @@ namespace AuthService.Controller
         }
         [HttpDelete]
         //[Auth("RoleManager","actionName","sdsd","sdcsd")]
-        public virtual async Task<NetResult<SuccessResult>> DeleteRole(int id)
+        public virtual async Task<NetResult<SuccessResult>> DeleteRole(TKey id)
         { SuccessResult result = new SuccessResult();
             try
             {

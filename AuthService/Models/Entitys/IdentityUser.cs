@@ -28,75 +28,38 @@ namespace AuthService.Models
         public virtual string PhoneNumber { get; set; }
         public virtual int Position { get; set; }
         public virtual bool IsSendOtp { get; set; }
-       
+
     }
 
-    public abstract partial  class IdentityUser<TKey>
+    public abstract partial class IdentityUser<TKey>
     {
         public bool CheckOtp(string otp)
-        { 
-
-
+        {
+            if (LastOtp == otp)
+            {
+                return true;
+            }
             return false;
         }
         public void Create<TKey>(RegisterUser reg)
         {
-            UserName = reg.UserName;
+            if (AuthOptions.SetNameAsPhone)
+            {
+                UserName = RepositoryState.ParsePhone(reg.UserName);
+                PhoneNumber = UserName;
+            }
+            else
+                UserName = reg.UserName;
             Password = RepositoryState.GetHashString(reg.Password);
             Email = reg.Email;
         }
         public abstract bool CheckDevice(string deviceId);
-        //{
-        //    var selectDevice = DeviceList.FirstOrDefault(m => m.DeviceId == deviceId);
-        //    if (selectDevice == null)
-        //    {
-        //        return false;
-        //    }
-        //    selectDevice.LastInCome = DateTime.Now;
-        //    Devices = JsonConvert.SerializeObject(DeviceList);
-        //    return true;
-        //}
-        public abstract void AddDeviceId(string deviceId, string deviceName);
-        //{
-        //    if (CheckDevice(deviceId))
-        //    {
-        //        return;
-        //    }
-        //    DeviceInfo deviceInfo = new DeviceInfo
-        //    {
-        //        AddDate = DateTime.Now,
-        //        DeviceId = deviceId,
-        //        DeviceName = deviceName,
-        //        LastInCome = DateTime.Now
-        //    };
-        //    userDevice.Add(deviceInfo);
-        //    Devices = JsonConvert.SerializeObject(userDevice);
 
-        //}
+        public abstract void AddDeviceId(string deviceId, string deviceName);
+
         [NotMapped]
         public bool ShouldSendOtp { get; set; }
         public abstract void ChangeLastIncome(string deviceId);
-        //{
-        //    if (!CheckDevice(deviceId))
-        //    {
-        //        return;
-        //    }
-        //    var myDevice = userDevice.FirstOrDefault(m => m.DeviceId == deviceId);
-        //    myDevice.LastInCome = DateTime.Now;
-        //    Devices = JsonConvert.SerializeObject(userDevice);
-
-        //}
-
-    }
-
-
-    public class DeviceInfo
-    {
-        public string DeviceId { get; set; }
-        public string DeviceName { get; set; }
-        public DateTime AddDate { get; set; }
-        public DateTime LastInCome { get; set; }
-        public string Data { get; set; }
     }
 
 }

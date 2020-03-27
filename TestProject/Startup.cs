@@ -1,4 +1,7 @@
 ﻿using AuthService;
+using Autofac;
+using Autofac.Core;
+using Autofac.Extensions.DependencyInjection;
 using CoreResults;
 using EntityRepository.Context;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +14,7 @@ using MongoAuthService.Models;
 using MongoRepositorys.MongoContext;
 using MongoRepositorys.Repository;
 using RepositoryCore.Interfaces;
+using System;
 using TestProject.Models.Db;
 
 namespace TestProject
@@ -23,22 +27,28 @@ namespace TestProject
         }
 
         public IConfiguration Configuration { get; }
+        public IContainer Container { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            CoreState.AddContextWithSwagger(services, "http://172.17.9.105:1600/api", "authTest", "test", "test");
-            services.AddScoped<IDbContext, AuthDataContext>();
+            //CoreState.AddContextWithSwagger(services, "http://172.17.9.105:1600/api", "authTest", "test", "test");
+            // services.AddScoped<IDbContext, AuthDataContext>();
             services.AddSingleton<IMongoContext>(new MongoDataContext("mongodb://127.0.0.1:27017"));
-            services.AddScoped(typeof(IRepositoryCore<,>), typeof(MongoRepository<>));
+            //  services.AddScoped(typeof(IRepositoryCore<,>), typeof(MongoRepository<>));
             AuthState.RegisterAuth<MongoUser, MongoRole, MongoUserRole>(services);
-            services.AddAuthSolutionService("mysupersecret_secretkey!123");
+             services.AddAuthSolutionService("mysupersecret_secretkey!123");
             //services.AddScoped<IAuthRepository<User, UserRole, int>, IdentityUserService<User, Role, UserRole>>();
             //services.AddScoped<IRoleRepository<Role>, IdentityRoleService<Role>>();
             //services.AddScoped<IDeleteDataService<DeleteData>, DeleteDataService<DeleteData>>();
             //services.AddScoped<IUserRoleRepository<User, Role, UserRole,DeleteData>, UserRoleRepositoryService<User, Role, UserRole, DeleteData>>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //  services.AddContextWithSwagger();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddContextWithSwagger();
+            var builder = new ContainerBuilder();
+            builder.RegisterGeneric(typeof(MongoRepository<>)).As(typeof(IRepositoryCore<,>)).InstancePerDependency();
+            builder.Populate(services);
+            Container = builder.Build();
+            return new AutofacServiceProvider(Container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +59,6 @@ namespace TestProject
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
-
             app.ContextWithSwagger();
             app.UseMvc();
 

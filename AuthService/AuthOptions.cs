@@ -74,16 +74,24 @@ namespace AuthService
                 throw new CoreException("Anuthorize", 401);
 
             }
-            var result = Activator.CreateInstance(typeof(TKey));
-            if (typeof(TKey).Name == typeof(int).Name)
+            if(typeof(int).Name== typeof(TKey).Name)
             {
-                result = int.Parse(userId);
+                return (TKey)(object)int.Parse(userId);
+
             }
-            else
+            if(typeof(long).Name== typeof(TKey).Name)
             {
-                result = userId;
+                return (TKey)(object)long.Parse(userId);
             }
-            return (TKey)(result);
+            if(typeof(double).Name== typeof(TKey).Name)
+            {
+                return (TKey)(object)userId;
+            }
+            if(typeof(string).Name== typeof(TKey).Name)
+            {
+             return   (TKey)(object)userId;
+            }
+            return (TKey)(object)userId;           
         }
         public static bool IsAuthorize(this AuthorizationFilterContext context)
         {

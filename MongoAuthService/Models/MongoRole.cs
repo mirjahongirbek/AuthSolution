@@ -5,10 +5,10 @@ namespace MongoAuthService.Models
 {
     public class MongoRole : IdentityRole<string>
     {
-        [BsonId]
-        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public override string Id { get; set; }
-
+        //[BsonId]
+        //[BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+       // public override string Id { get; set; }
+        
     }
 
 }
