@@ -32,16 +32,19 @@ namespace AuthModel.ModelView
         public string UserName { get; set; }
         public string ErrorMessage { get; set; }
         public int ErrorId { get; set; }
+        public string Id { get; set; }
         public static RegisterResult Create(IdentityUser<string> user)
         {
             RegisterResult result = new RegisterResult()
             {
                 IsRegister = true,
                 ErrorId = 0,
-                UserName = user.UserName
+                UserName = user.UserName,
+                Id= user.Id
             };
             return result;
         }
+
     }
     public class RestorePasswordModel
     {
