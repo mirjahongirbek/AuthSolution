@@ -1,8 +1,8 @@
-﻿using AuthService.Attributes;
-using AuthService.Interfaces.Service;
-using AuthService.Models;
-using AuthService.ModelView;
-using AuthService.ModelView.Roles;
+﻿using AuthModel.Interfaces;
+using AuthModel.Models.Entitys;
+using AuthModel.ModelView;
+using AuthModel.ModelView.Roles;
+using AuthService.Attributes;
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using System;

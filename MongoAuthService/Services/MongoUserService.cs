@@ -4,10 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AuthService;
-using AuthService.Interfaces.Service;
-using AuthService.ModelView;
-using Microsoft.Extensions.DependencyInjection;
+using AuthModel;
+using AuthModel.Interfaces;
+using AuthModel.ModelView;
 using MongoAuthService.Models;
 using RepositoryCore.CoreState;
 using RepositoryCore.Exceptions;
@@ -21,8 +20,8 @@ namespace MongoAuthService.Services
         {
             if (user == null) { return null; }
             var roles = user.UserRoles.Select(m => m.MongoRole).ToList();
-            var jwt = AuthOptions.GenerateClaims<TUser, MongoRole, string>(user, roles);
-            var accessToken = AuthOptions.SetToken<TUser, string>(jwt, user);
+            var jwt = AuthModalOption.GenerateClaims<TUser, MongoRole, string>(user, roles);
+            var accessToken = AuthModalOption.SetToken<TUser, string>(jwt, user);
             var refreshToken = RepositoryState.GenerateRandomString(24);
             user.RefreshToken = refreshToken;
             _repo.Update(user);
@@ -46,7 +45,7 @@ namespace MongoAuthService.Services
                 throw new CoreException("User not found", 0);
 
             }
-            if (AuthOptions.CheckDeviceId && !user.CheckDevice(model.DeviceId))
+            if (AuthModalOption.CheckDeviceId && !user.CheckDevice(model.DeviceId))
             {
                 return (null, user);
             }
@@ -86,7 +85,7 @@ namespace MongoAuthService.Services
         public async Task<LoginResult> ActivateUser(ActivateUserModel model)
         {
             TUser user = null;
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 user = _repo.GetFirst(m => m.UserName == model.UserName.ParsePhone());
             }
@@ -153,7 +152,7 @@ namespace MongoAuthService.Services
 
         public TUser CheckUser(string userName)
         {
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 userName = RepositoryState.ParsePhone(userName);
             }
@@ -247,7 +246,7 @@ namespace MongoAuthService.Services
         }
         public async Task<TUser> GetByUserName(string userName)
         {
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 userName = RepositoryState.ParsePhone(userName);
             }
@@ -259,7 +258,7 @@ namespace MongoAuthService.Services
         {
             return _repo.GetFirst(expression);
         }
-        public async Task<LoginResult> RestorePasswor(RestorePasswordModel model)
+        public async Task<LoginResult> RestorePassword(RestorePasswordModel model)
         {
             var user = await GetByUserName(model.UserName);
             if (user == null)

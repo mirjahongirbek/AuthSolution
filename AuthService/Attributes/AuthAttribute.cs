@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AuthModel;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
@@ -24,7 +24,7 @@ namespace AuthService.Attributes
         {
             if (string.IsNullOrEmpty(action))
             {
-                if (AuthOptions.CheckDefaulAction)
+                if (AuthModalOption.CheckDefaulAction)
                 {
                     throw new Exception("In path " + path + "not set in Controller plaese set Action");
                 }

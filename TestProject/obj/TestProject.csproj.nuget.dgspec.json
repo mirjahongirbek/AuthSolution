@@ -4,6 +4,81 @@
     "C:\\projects\\RepositoryCore\\AuthSolution\\TestProject\\TestProject.csproj": {}
   },
   "projects": {
+    "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\AuthModel.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\AuthModel.csproj",
+        "projectName": "AuthModel",
+        "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\AuthModel.csproj",
+        "packagesPath": "C:\\Users\\murtozayev-j\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\murtozayev-j\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\projects\\nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj": {
       "version": "0.0.1",
       "restore": {
@@ -25,13 +100,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
+              "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\AuthModel.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\AuthModel.csproj"
+              },
               "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj": {
                 "projectPath": "C:\\projects\\RepositoryCore\\CoreResult\\CoreResult\\CoreResult.csproj"
               },
@@ -93,7 +170,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -118,15 +195,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj": {
-                "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthService\\AuthService.csproj"
+              "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\AuthModel.csproj": {
+                "projectPath": "C:\\projects\\RepositoryCore\\AuthSolution\\AuthModel\\AuthModel.csproj"
               },
               "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj": {
                 "projectPath": "C:\\projects\\RepositoryCore\\RepositoryCore\\RepositoryCore\\RepositoryCore.csproj"
@@ -160,7 +236,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -185,8 +261,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -288,7 +363,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -313,8 +388,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -371,7 +445,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -396,8 +470,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -482,7 +555,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -507,8 +580,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -550,7 +622,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -575,8 +647,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -618,7 +689,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -643,8 +714,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -686,7 +756,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -711,8 +781,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "\\\\172.17.9.248\\open\\nuget": {},
-          "\\\\172.17.9.248\\open\\nugetTest": {},
+          "C:\\projects\\nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -746,7 +815,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

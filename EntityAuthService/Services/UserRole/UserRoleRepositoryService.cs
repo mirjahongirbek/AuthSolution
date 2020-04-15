@@ -1,5 +1,5 @@
-﻿using AuthService.Interfaces.Service;
-using AuthService.ModelView.UserRole;
+﻿using AuthModel.Interfaces;
+using AuthModel.ModelView.UserRole;
 using EntityRepository.Models;
 using RepositoryCore.Interfaces;
 using System.Collections.Generic;

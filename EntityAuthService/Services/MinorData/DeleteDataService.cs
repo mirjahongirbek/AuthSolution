@@ -1,5 +1,5 @@
-﻿using AuthService.Interfaces.Service;
-using AuthService.Models;
+﻿using AuthModel.Interfaces;
+using AuthModel.Models.Entitys;
 using EntityRepository.Context;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ using System;
 
 namespace EntityRepository.Services
 {
-   public class DeleteDataService<TDeleteData>: IDeleteDataService<TDeleteData>
+    public class DeleteDataService<TDeleteData>: IDeleteDataService<TDeleteData>
         where TDeleteData :DeleteData
     {
         public DbSet<TDeleteData> _db;

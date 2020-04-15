@@ -1,5 +1,6 @@
-﻿using AuthService;
-using AuthService.Enum;
+﻿using AuthModel;
+using AuthModel.Enum;
+using AuthService;
 using RepositoryCore.Exceptions;
 using System;
 using System.Security.Claims;
@@ -40,7 +41,7 @@ namespace EntityRepository.Services
         }
         public bool CheckUserOtp(TUser user, string otp)
         {
-            if (user.LastOtpDate.AddMinutes(AuthOptions.OtpTime) < DateTime.Now)
+            if (user.LastOtpDate.AddMinutes(AuthModalOption.OtpTime) < DateTime.Now)
             {
                 throw new CoreException("");
             }

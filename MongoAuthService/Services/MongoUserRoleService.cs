@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AuthService.Interfaces.Service;
-using AuthService.ModelView.UserRole;
+using AuthModel.Interfaces;
+using AuthModel.ModelView.UserRole;
 using MongoAuthService.Models;
 using RepositoryCore.Exceptions;
 

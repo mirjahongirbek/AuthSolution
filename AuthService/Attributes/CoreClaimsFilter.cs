@@ -1,4 +1,5 @@
-﻿using CoreResults;
+﻿using AuthModel;
+using CoreResults;
 using Microsoft.AspNetCore.Mvc.Filters;
 using RepositoryCore.Models;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace AuthService.Attributes
             isAction = bool.Parse(claim.Type);
             if (!isAction)
             {
-                isAction = AuthOptions.CheckDefaulAction;
+                isAction = AuthModalOption.CheckDefaulAction;
             }
             action = claim.Value.ToLower();
             controller = claim.ValueType.ToLower();

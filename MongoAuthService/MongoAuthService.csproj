@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\RepositoryCore\RepositoryCore\RepositoryCore.csproj" />
-    <ProjectReference Include="..\AuthService\AuthService.csproj" />
+    <ProjectReference Include="..\AuthModel\AuthModel.csproj" />
   </ItemGroup>
 
 </Project>

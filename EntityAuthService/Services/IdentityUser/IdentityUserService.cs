@@ -1,6 +1,7 @@
-﻿using AuthService;
-using AuthService.Interfaces.Service;
-using AuthService.ModelView;
+﻿using AuthModel;
+using AuthModel.Interfaces;
+using AuthModel.ModelView;
+using AuthService;
 using EntityRepository.Context;
 using EntityRepository.Models;
 using Microsoft.EntityFrameworkCore;
@@ -63,7 +64,7 @@ namespace EntityRepository.Services
         public virtual async Task<TUser> GetByUserName(string userName)
         {
             TUser user = null;
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 user = _dbSet.FirstOrDefault(m => m.UserName == RepositoryState.ParsePhone(userName));
             }
@@ -221,6 +222,11 @@ namespace EntityRepository.Services
         }
 
         public Task<bool> ChangePassword(int userId, ChangePasswordModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LoginResult> RestorePassword(RestorePasswordModel model)
         {
             throw new NotImplementedException();
         }

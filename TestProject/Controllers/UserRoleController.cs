@@ -1,5 +1,5 @@
-﻿using AuthService.Controller;
-using AuthService.Interfaces.Service;
+﻿using AuthModel.Interfaces;
+using AuthService.Controller;
 using Microsoft.AspNetCore.Mvc;
 using MongoAuthService.Models;
 

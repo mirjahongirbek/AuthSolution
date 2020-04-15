@@ -32,3 +32,6 @@ C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\Mong
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\MongoRepositorys.pdb
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\MongoAuthService.dll
 C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\MongoAuthService.pdb
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\AuthModel.dll
+C:\projects\RepositoryCore\AuthSolution\TestProject\bin\Debug\netcoreapp2.2\AuthModel.pdb
+C:\projects\RepositoryCore\AuthSolution\TestProject\obj\Debug\netcoreapp2.2\TestProject.genruntimeconfig.cache

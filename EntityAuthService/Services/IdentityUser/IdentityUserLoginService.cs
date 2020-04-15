@@ -1,6 +1,7 @@
-﻿using AuthService;
-using AuthService.Attributes;
-using AuthService.ModelView;
+﻿using AuthModel;
+using AuthModel.Attrubutes;
+using AuthModel.ModelView;
+using AuthService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RepositoryCore.CoreState;
@@ -26,7 +27,7 @@ namespace EntityRepository.Services
         {
             
             TUser user = null;
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 user =  GetFirst(m => m.UserName == RepositoryState.ParsePhone(model.UserName));
             }
@@ -108,12 +109,12 @@ namespace EntityRepository.Services
             var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             var now = DateTime.Now;
             var jwt = new JwtSecurityToken(
-                 AuthOptions.ISSUER,
-                 AuthOptions.AUDIENCE,
+                 AuthModalOption.ISSUER,
+                 AuthModalOption.AUDIENCE,
                  notBefore: now,
                  claims: claimsIdentity.Claims,
-                 expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                 expires: now.Add(TimeSpan.FromMinutes(AuthModalOption.LIFETIME)),
+                 signingCredentials: new SigningCredentials(AuthModalOption.GetSymmetricSecurityKey(),
                      SecurityAlgorithms.HmacSha256));
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
             if (user != null)
@@ -126,7 +127,7 @@ namespace EntityRepository.Services
         }
         public virtual async Task<(LoginResult, TUser)> Login(LoginViewModal model)
         {
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 model.UserName = RepositoryState.ParsePhone(model.UserName);
             }
@@ -137,7 +138,7 @@ namespace EntityRepository.Services
 
             }
 
-            if (AuthOptions.CheckDeviceId)
+            if (AuthModalOption.CheckDeviceId)
             {
                 if (user.CheckDevice(model.DeviceId))
                 {

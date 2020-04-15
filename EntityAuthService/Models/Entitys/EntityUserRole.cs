@@ -1,5 +1,5 @@
-﻿using AuthService.Models;
-using AuthService.ModelView.UserRole;
+﻿using AuthModel.Models.Entitys;
+using AuthModel.ModelView.UserRole;
 
 namespace EntityRepository.Models
 {
@@ -12,7 +12,7 @@ namespace EntityRepository.Models
                 UserId = model.UserId,
                 AddUserId = userId,
                 RoleId = model.RoleId,
-                Status = AuthService.Enum.UserStatus.Active
+                Status = AuthModel.Enum.UserStatus.Active
             };
             return entity;
         }

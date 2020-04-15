@@ -1,5 +1,5 @@
-﻿using AuthService.Controller;
-using AuthService.Interfaces.Service;
+﻿using AuthModel.Interfaces;
+using AuthService.Controller;
 using Microsoft.AspNetCore.Mvc;
 using MongoAuthService.Models;
 using System;
@@ -17,6 +17,11 @@ namespace TestProject.Controllers
         protected override void SendSms(string phoneNumber, string otpCode)
         {
             Console.WriteLine(phoneNumber + "   [][]" + otpCode);
+        }
+
+        protected override void SenNotify(MongoUser phoneNumber, string otpCode)
+        {
+            throw new NotImplementedException();
         }
     }
 

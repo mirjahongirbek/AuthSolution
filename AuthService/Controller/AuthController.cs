@@ -1,6 +1,8 @@
-﻿using AuthService.Interfaces.Service;
-using AuthService.Models;
-using AuthService.ModelView;
+﻿using AuthModel;
+using AuthModel.Interfaces;
+using AuthModel.Models.Entitys;
+using AuthModel.ModelView;
+
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryCore.CoreState;
@@ -50,7 +52,7 @@ namespace AuthService.Controller
                 {
                     var otp = RepositoryState.RandomInt();
                     _user.SetOtp(result.Item2, otp);
-                    SendSms(result.Item2.PhoneNumber, otp);
+                    SenNotify(result.Item2, otp);
                     return new LoginResult()
                     {
                         UserName = result.Item2.UserName,
@@ -79,7 +81,7 @@ namespace AuthService.Controller
                 return ext;
             }
         }
-        protected abstract void SendSms(string phoneNumber, string otpCode);
+        protected abstract void SenNotify(TUser phoneNumber, string otpCode);
         [HttpGet]
         public virtual async Task<NetResult<ResponseData>> RestorePassword(string userName)
         {
@@ -90,7 +92,7 @@ namespace AuthService.Controller
                 if (user == null) throw new CoreException("User not found");
                 user.Token = RepositoryState.GenerateRandomString(24);
                 _user.SetOtp(user, otp);
-                SendSms(user.PhoneNumber, otp);
+                SenNotify(user, otp);
                 return new ResponseData() { Result = new { Token = user.Token, UserName = user.UserName, IsSendSms = true } };
             }
             catch (Exception ext)
@@ -109,7 +111,7 @@ namespace AuthService.Controller
                     throw new CoreException("Token not found", 5);
 
                 }
-                var loginResult = await _user.RestorePasswor(model);
+                var loginResult = await _user.RestorePassword(model);
                 if (loginResult.IsSentOtp)
                 {
                     SendSms(loginResult.UserName, model.Otp);
@@ -125,13 +127,14 @@ namespace AuthService.Controller
                 return ext;
             }
         }
+        protected abstract void SendSms(string userName, string otp);
         [HttpGet]
         public virtual async Task<NetResult<SuccessResult>> IsRegister(string userName)
         {
             SuccessResult result = new SuccessResult();
             try
             {
-                if (AuthOptions.SetNameAsPhone && !userName.Contains("@"))
+                if (AuthModalOption.SetNameAsPhone && !userName.Contains("@"))
                 {
 
                     userName = RepositoryState.ParsePhone(userName);

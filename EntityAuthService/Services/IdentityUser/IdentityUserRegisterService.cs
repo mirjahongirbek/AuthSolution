@@ -1,6 +1,7 @@
-﻿using AuthService;
-using AuthService.Enum;
-using AuthService.ModelView;
+﻿using AuthModel;
+using AuthModel.Enum;
+using AuthModel.ModelView;
+using AuthService;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.CoreState;
 using RepositoryCore.Exceptions;
@@ -17,7 +18,7 @@ namespace EntityRepository.Services
         {
             RegisterResult result = new RegisterResult();
             
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 model.UserName = RepositoryState.ParsePhone(model.UserName);
             }
@@ -28,7 +29,7 @@ namespace EntityRepository.Services
                 return result;
             }
             user = AddRegister(model);
-            if (AuthOptions.SetNameAsPhone)
+            if (AuthModalOption.SetNameAsPhone)
             {
                 model.UserName = RepositoryState.ParsePhone(model.UserName);
                 if (string.IsNullOrEmpty(model.UserName))

@@ -1,5 +1,5 @@
-﻿using AuthService.Attributes;
-using AuthService.ModelView;
+﻿using AuthModel.ModelView;
+using AuthService.Attributes;
 using CoreResults;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryCore.Exceptions;

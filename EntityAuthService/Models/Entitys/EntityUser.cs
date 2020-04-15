@@ -1,4 +1,4 @@
-﻿using AuthService.Models;
+﻿using AuthModel.Models.Entitys;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

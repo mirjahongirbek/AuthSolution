@@ -36,7 +36,7 @@ namespace TestProject
             // services.AddScoped<IDbContext, AuthDataContext>();
             services.AddSingleton<IMongoContext>(new MongoDataContext("mongodb://127.0.0.1:27017"));
             //  services.AddScoped(typeof(IRepositoryCore<,>), typeof(MongoRepository<>));
-            AuthState.RegisterAuth<MongoUser, MongoRole, MongoUserRole>(services);
+            //AuthState.RegisterAuth<MongoUser, MongoRole, MongoUserRole>(services);
              services.AddAuthSolutionService("mysupersecret_secretkey!123");
             //services.AddScoped<IAuthRepository<User, UserRole, int>, IdentityUserService<User, Role, UserRole>>();
             //services.AddScoped<IRoleRepository<Role>, IdentityRoleService<Role>>();

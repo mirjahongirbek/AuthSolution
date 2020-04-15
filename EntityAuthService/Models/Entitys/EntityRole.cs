@@ -1,4 +1,5 @@
-﻿using AuthService.Models;
+﻿
+using AuthModel.Models.Entitys;
 
 namespace EntityRepository.Models
 {

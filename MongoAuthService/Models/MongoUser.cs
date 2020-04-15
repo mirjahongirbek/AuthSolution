@@ -1,5 +1,5 @@
-﻿using AuthService.Models;
-
+﻿
+using AuthModel.Models.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
